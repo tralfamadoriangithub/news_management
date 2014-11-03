@@ -1,0 +1,12 @@
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+  "http://struts.apache.org/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+	<definition name="news_list.page" path="/WEB-INF/layout/base-layout.jsp">
+		<put name="header" value="/WEB-INF/tiles/header.jsp" />
+		<put name="aside" value="/WEB-INF/tiles/aside.jsp" />
+		<put name="main_content" value="/WEB-INF/tiles/news_list.jsp" />
+		<put name="footer" value="/WEB-INF/tiles/footer.jsp" />
+	</definition>
+</tiles-definitions>

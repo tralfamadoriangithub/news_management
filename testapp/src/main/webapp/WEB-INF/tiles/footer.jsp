@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<jsp:forward page="/away.do"/>
+<!DOCTYPE html>
+<html>
+<h3>Placeholder</h3>
+</html>
