@@ -5,7 +5,7 @@
 
 <struts-config>
 	<action-mappings>
-		<action path="/away" forward="news_list.page" />
+		<action path="/index" forward="news_list.page" />
 	</action-mappings>
 	
 	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" />

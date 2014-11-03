@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Index</title>
+<link href="/css/style.css" rel="stylesheet" type="text/css" />
+<title><tiles:getAsString name="title"/></title>
 </head>
 <body>
 

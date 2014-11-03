@@ -4,6 +4,7 @@
 
 <tiles-definitions>
 	<definition name="news_list.page" path="/WEB-INF/layout/base-layout.jsp">
+		<put name="title" value="News List" />
 		<put name="header" value="/WEB-INF/tiles/header.jsp" />
 		<put name="aside" value="/WEB-INF/tiles/aside.jsp" />
 		<put name="main_content" value="/WEB-INF/tiles/news_list.jsp" />
