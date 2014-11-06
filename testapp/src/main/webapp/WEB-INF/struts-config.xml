@@ -4,20 +4,50 @@
 "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 
 <struts-config>
+
+	<form-beans>
+		<form-bean name="newsForm"
+			type="com.epam.testapp.presentation.form.NewsForm" />
+		<form-bean name="news" type="com.epam.testapp.entity.News" />
+	</form-beans>
+
+	<global-forwards>
+		<forward name="news_list" path="news_list.page"/>
+		<forward name="view_news" path="view_news.page"/>
+		<forward name="add_news" path="add_edit_news.page" />
+		<forward name="edit_news" path="add_edit_news.page"/>
+		<forward name="error" path="error.page"/>
+		
+	</global-forwards>
+
 	<action-mappings>
-		<action path="/index" forward="news_list.page" />
+		<action path="/index" forward="news_list.page"
+			type="org.springframework.web.struts.DelegatingActionProxy" />
+			
+			<action path="/NewsList" 
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="newsList"/>
+
+		<action path="/AddNews" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="addNews" />
+
+		<action path="/SaveNews" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="saveNews" />
+			
 	</action-mappings>
-	
+
 	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" />
-	
+
 	<message-resources parameter="com.epam.testapp.properties.ApplicationResources" />
 
 	<plug-in className="org.apache.struts.tiles.TilesPlugin">
 		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
 	</plug-in>
 
-	<!-- <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn"> 
-		<set-property property="contextConfigLocation" value="/WEB-INF/application-context.xml" 
-		/> </plug-in> -->
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+		<set-property property="contextConfigLocation" value="/WEB-INF/applicationContext.xml" />
+	</plug-in>
 
 </struts-config>

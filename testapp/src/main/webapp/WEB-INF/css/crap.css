@@ -1,0 +1,33 @@
+body{
+  margin: 0;
+  padding: 0;
+  background-color: #cccccc;
+  text-align:center;
+}
+
+#main_wrapper{
+  
+}
+
+#header{
+  border: 1px solid black;
+}
+
+#header_title{
+  
+}
+
+#main_content{
+  clear:both;
+  
+}
+
+#aside{
+  min-width:20%;
+  background-color: #dddddd;
+  float:left;
+}
+
+#page_content{
+  width:79%;
+}

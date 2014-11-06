@@ -3,45 +3,65 @@ package com.epam.testapp.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class News implements Serializable{
+public class News implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private int id;
 	private String title;
 	private Date date;
 	private String brief;
 	private String content;
+	private String date2;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public Date getDate() {
 		return date;
 	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 	public String getBrief() {
 		return brief;
 	}
+
 	public void setBrief(String brief) {
 		this.brief = brief;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public String getDate2() {
+		return date2;
+	}
+
+	public void setDate2(String date2) {
+		this.date2 = date2;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -53,6 +73,7 @@ public class News implements Serializable{
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -86,11 +107,12 @@ public class News implements Serializable{
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [id=" + id + ", title=" + title + ", date=" + date
-				+ ", brief=" + brief + ", content=" + content + "]";
+		return getClass().getSimpleName() + " [id=" + id + ", title=" + title
+				+ ", date=" + date + ", brief=" + brief + ", content="
+				+ content + "]";
 	}
 
-	
 }
