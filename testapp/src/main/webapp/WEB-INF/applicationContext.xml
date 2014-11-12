@@ -16,8 +16,12 @@
 	<bean id="newsDao" class="com.epam.testapp.database.NewsDao"
 		autowire="byName" />
 
-	<bean id="newsAction" name="/NewsList, /AddNews, /SaveNews"
-		class="com.epam.testapp.presentation.action.NewsAction" />
+	<bean id="newsService" class="com.epam.testapp.service.impl.NewsServiceImpl"
+		autowire="byName" />
+
+	<bean id="newsAction"
+		name="/List, /Add, /Save, /Delete, /View, /Edit. /ChangeLocale"
+		class="com.epam.testapp.presentation.action.NewsAction" autowire="byName" />
 
 	<context:property-placeholder location="/WEB-INF/database.properties" />
 

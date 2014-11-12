@@ -4,10 +4,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 
 <ul id="aside_list">
-	<li><html:link action="/NewsList">
+	<li><html:link action="/List">
 			<bean:message key="label.news_list" />
 		</html:link></li>
-	<li><html:link action="/AddNews">
+	<li><html:link action="/Add">
 			<bean:message key="label.add_news" />
 		</html:link></li>
 </ul> 

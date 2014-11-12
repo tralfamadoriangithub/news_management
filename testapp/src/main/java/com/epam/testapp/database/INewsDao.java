@@ -6,7 +6,7 @@ import com.epam.testapp.entity.News;
 
 public interface INewsDao {
 	public List<News> getList();
-	public void save( News news );
-	public void remove( int ... id );
-	public News fetchById( int ... id );
+	public News save( News news );
+	public void remove( List<Integer> newsId );
+	public News fetchById(int id );
 }

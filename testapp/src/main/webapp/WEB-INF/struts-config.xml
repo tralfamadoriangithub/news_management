@@ -12,30 +12,44 @@
 	</form-beans>
 
 	<global-forwards>
-		<forward name="news_list" path="news_list.page"/>
-		<forward name="view_news" path="view_news.page"/>
-		<forward name="add_news" path="add_edit_news.page" />
-		<forward name="edit_news" path="add_edit_news.page"/>
-		<forward name="error" path="error.page"/>
-		
+		<forward name="main_page" path="/List.do" redirect="true" />
+		<forward name="news_list_page" path="news_list.page" />
+		<forward name="view_news_page" path="view_news.page" />
+		<forward name="add_news_page" path="add_edit_news.page" />
+		<forward name="edit_news_page" path="add_edit_news.page" />
+		<forward name="error_page" path="error.page" />
 	</global-forwards>
 
 	<action-mappings>
-		<action path="/index" forward="news_list.page"
-			type="org.springframework.web.struts.DelegatingActionProxy" />
-			
-			<action path="/NewsList" 
-			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="newsList"/>
 
-		<action path="/AddNews" name="newsForm"
+		<action path="/List" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="addNews" />
+			parameter="list" />
 
-		<action path="/SaveNews" name="newsForm"
+		<action path="/Add" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="saveNews" />
+			parameter="add" />
+
+		<action path="/Save" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="save" />
+
+		<action path="/Delete" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="delete" />
+
+		<action path="/View" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="view" />
+
+		<action path="/Edit" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="edit" />
 			
+			<action path="/ChangeLocale" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="changeLocale" />
+
 	</action-mappings>
 
 	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" />

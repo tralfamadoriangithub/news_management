@@ -25,72 +25,95 @@ public class NewsDao implements INewsDao {
 		try {
 
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM news");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM NEWS");
 			newsList = new ArrayList<>();
 
 			while (resultSet.next()) {
 				newsList.add(getNewsFromResutSet(resultSet));
 			}
-
 			resultSet.close();
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			releaseConnection(connection);
 		}
 		return newsList;
 	}
 
 	@Override
-	public void save(News news) {
+	public News save(News news) {
 
 		Connection connection = connectionPool.getConnection();
+
+		java.sql.Date date = new Date(news.getDate().getTime());
 
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(
 							"INSERT INTO news (news_title, news_date, news_brief, news_content) VALUES (?,?,?,?)",
-							Statement.RETURN_GENERATED_KEYS);
+							new String[] { "NEWS_ID" });
 			preparedStatement.setString(1, news.getTitle());
-			preparedStatement.setDate(2, (Date) news.getDate());
+			preparedStatement.setDate(2, date);
 			preparedStatement.setString(3, news.getBrief());
 			preparedStatement.setString(4, news.getContent());
 			preparedStatement.executeUpdate();
+			ResultSet resultSet = preparedStatement.getGeneratedKeys();
+			if (resultSet.next()) {
+				news.setId( resultSet.getInt(1) );
+			}
+			resultSet.close();
 			preparedStatement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			releaseConnection(connection);
 		}
+		return news;
 	}
 
 	@Override
-	public void remove(int... id) {
-		
+	public void remove(List<Integer> newsId) {
+
 		Connection connection = connectionPool.getConnection();
 		try {
-			connection.setAutoCommit(false);
-			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM news WHERE news_id = ?");
-			for( int i : id){
+			// connection.setAutoCommit(false);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("DELETE FROM news WHERE news_id = ?");
+			for (Integer i : newsId) {
 				preparedStatement.setInt(1, i);
 				preparedStatement.addBatch();
 			}
 			preparedStatement.executeBatch();
 			preparedStatement.close();
-			connection.setAutoCommit(true);
+			// connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			releaseConnection(connection);
 		}
-		
 	}
 
 	@Override
-	public News fetchById(int... id) {
-		// TODO Auto-generated method stub
-		return null;
+	public News fetchById(int id) {
+
+		Connection connection = connectionPool.getConnection();
+		News news = new News();
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT * FROM news WHERE news_id = ?");
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			news = getNewsFromResutSet(resultSet);
+			resultSet.close();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			releaseConnection(connection);
+		}
+		return news;
 	}
 
 	private News getNewsFromResutSet(ResultSet resultSet) {
@@ -108,8 +131,8 @@ public class NewsDao implements INewsDao {
 		}
 		return news;
 	}
-	
-	private void releaseConnection(Connection connection){
+
+	private void releaseConnection(Connection connection) {
 		connectionPool.releaseConnection(connection);
 		connection = null;
 	}

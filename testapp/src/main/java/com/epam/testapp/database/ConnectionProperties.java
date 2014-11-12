@@ -5,7 +5,7 @@ public class ConnectionProperties {
 	public ConnectionProperties(){}
 
 	private String driver = "oracle.jdbc.driver.OracleDriver";
-	private String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	private String user = "testapp";
 	private String password = "oracle";
 	private int connectionPoolSize = 10;
