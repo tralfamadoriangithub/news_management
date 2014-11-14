@@ -12,7 +12,6 @@ public class News implements Serializable {
 	private Date date;
 	private String brief;
 	private String content;
-	private String date2;
 
 	public int getId() {
 		return id;
@@ -52,14 +51,6 @@ public class News implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public String getDate2() {
-		return date2;
-	}
-
-	public void setDate2(String date2) {
-		this.date2 = date2;
 	}
 
 	@Override

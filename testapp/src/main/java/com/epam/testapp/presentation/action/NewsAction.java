@@ -1,6 +1,5 @@
 package com.epam.testapp.presentation.action;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -23,111 +22,126 @@ public class NewsAction extends MappingDispatchAction {
 
 	private INewsService newsService;
 
-	public ActionForward list(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward list( ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
 
-		if (newsForm.getNewsList().isEmpty()) {
+		if ( newsForm.getNewsList().isEmpty() ) {
 			List<News> newsList = newsService.getNewsList();
-			newsForm.getNewsList().addAll(newsList);
+			newsForm.getNewsList().addAll( newsList );
 		}
-		return mapping.findForward(ProjectPages.NEWS_LIST_PAGE);
+		String pageName = ProjectPages.NEWS_LIST_PAGE;
+
+		newsService.setCurrentPage( request, pageName );
+
+		return mapping.findForward( pageName );
 	}
 
-	public ActionForward add(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward add( ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
+		
+		News news = new News();
+		Date date = new Date( System.currentTimeMillis() );
+		news.setDate( date );
+		newsForm.setNews( news );
+		String dateString = DateUtil.getStringFromDate( date, newsForm.getLocale() );
+		newsForm.setDateString( dateString );
+		String pageName = ProjectPages.ADD_NEWS_PAGE;
 
-		newsForm.setNews(new News());
-		String dateString = DateUtil.getStringFromDate(
-				new Date(System.currentTimeMillis()), newsForm.getLocale());
-		newsForm.setDateString(dateString);
+		newsService.setCurrentPage( request, pageName );
 
-		return mapping.findForward(ProjectPages.ADD_NEWS_PAGE);
+		return mapping.findForward( pageName );
 	}
 
-	public ActionForward save(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward save( ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
-
 		News newNews = newsForm.getNews();
-		Date date = DateUtil.getDateFromString(newsForm.getDateString(),
-				newsForm.getLocale());
-		newNews.setDate(date);
 
-		newNews = newsService.saveNews(newNews);
-		newsForm.getNewsList().add(newNews);
+		newNews = newsService.saveNews( newNews, newsForm.getDateString(),
+				newsForm.getLocale() );
+		newsForm.getNewsList().add( newNews );
 
-		ActionForward forward = mapping.findForward(ProjectPages.MAIN_PAGE);
-		return forward;
+		return mapping.findForward( ProjectPages.MAIN_PAGE );
 	}
 
-	public ActionForward delete(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward delete( ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
 
 		String[] stringNewsId = newsForm.getSelectedNewsId();
+		List<News> newsList = newsForm.getNewsList();
 
-		if (stringNewsId != null) {
-			List<Integer> intNewsId = new ArrayList<>(stringNewsId.length);
-			for (int i = 0; i < stringNewsId.length; i++) {
-				intNewsId.add(Integer.parseInt(stringNewsId[i]));
-			}
+		List<News> updatedNewsList = newsService.removeNews( stringNewsId,
+				newsList );
 
-			List<News> newsList = newsForm.getNewsList();
-			List<News> updatedNewsList = newsService.removeNews(intNewsId,
-					newsList);
-			newsForm.setNewsList(updatedNewsList);
+		if ( updatedNewsList != null ) {
+			newsForm.setNewsList( updatedNewsList );
 		}
-		return mapping.findForward(ProjectPages.MAIN_PAGE);
+
+		return mapping.findForward( ProjectPages.MAIN_PAGE );
 	}
 
-	public ActionForward view(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward view( ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response ) {
 
-		Integer newsId = Integer.parseInt(request.getParameter("newsId"));
+		Integer newsId = Integer.parseInt( request.getParameter( "newsId" ) );
 		NewsForm newsForm = (NewsForm) form;
-		News news = newsService.getSelectedNews(newsForm.getNewsList(), newsId);
-		newsForm.setNews(news);
+		News news = newsService
+				.getSelectedNews( newsForm.getNewsList(), newsId );
+		newsForm.setNews( news );
 
-		return mapping.findForward(ProjectPages.VIEW_NEWS_PAGE);
+		String pageName = ProjectPages.VIEW_NEWS_PAGE;
+		newsService.setCurrentPage( request, pageName );
+
+		return mapping.findForward( pageName );
 	}
 
-	public ActionForward edit(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward edit( ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response ) {
 
-		Integer newsId = Integer.parseInt(request.getParameter("newsId"));
+		Integer newsId = Integer.parseInt( request.getParameter( "newsId" ) );
 		NewsForm newsForm = (NewsForm) form;
-		News news = newsService.getSelectedNews(newsForm.getNewsList(), newsId);
-		newsForm.setNews(news);
+		News news = newsService
+				.getSelectedNews( newsForm.getNewsList(), newsId );
+		newsForm.setNews( news );
 
-		return mapping.findForward(ProjectPages.ADD_NEWS_PAGE);
+		String pageName = ProjectPages.ADD_NEWS_PAGE;
+		newsService.setCurrentPage( request, pageName );
+
+		return mapping.findForward( pageName );
 	}
 
-	public ActionForward cancel(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward cancel( ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response ) {
 
 		return null;
 	}
-	
-	public ActionForward changeLocale(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) {
-		System.out.println(getLocale(request));
-		Locale locale = new Locale("ru", "RU");
-		System.out.println(locale);
-		setLocale(request, locale);
-		return mapping.findForward(ProjectPages.MAIN_PAGE);
+
+	public ActionForward changeLocale( ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response ) {
+
+		NewsForm newsForm = (NewsForm) form;
+		Locale locale = newsService.changeLocale( newsForm.getLocaleName(),
+				request );
+		newsForm.setLocale( locale );
+		setLocale( request, locale );
+
+		return mapping.findForward( newsService.getCurrentPage( request ) );
 	}
 
 	public INewsService getNewsService() {
 		return newsService;
 	}
 
-	public void setNewsService(INewsService newsService) {
+	public void setNewsService( INewsService newsService ) {
+
 		this.newsService = newsService;
 	}
+
 }

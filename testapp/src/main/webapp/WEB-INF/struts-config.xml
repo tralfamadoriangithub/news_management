@@ -24,31 +24,31 @@
 
 		<action path="/List" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="list" />
+			parameter="list" validate="false"/>
 
 		<action path="/Add" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="add" />
+			parameter="add" validate="false"/>
 
 		<action path="/Save" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="save" />
+			parameter="save" input="add_edit_news.page"/>
 
 		<action path="/Delete" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="delete" />
+			parameter="delete" validate="false"/>
 
 		<action path="/View" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="view" />
+			parameter="view" validate="false"/>
 
 		<action path="/Edit" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="edit" />
+			parameter="edit" validate="false"/>
 			
 			<action path="/ChangeLocale" name="newsForm"
 			type="org.springframework.web.struts.DelegatingActionProxy"
-			parameter="changeLocale" />
+			parameter="changeLocale" validate="false"/>
 
 	</action-mappings>
 
@@ -59,6 +59,10 @@
 	<plug-in className="org.apache.struts.tiles.TilesPlugin">
 		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
 	</plug-in>
+	
+	<!-- <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml, /WEB-INF/validation.xml" />
+	</plug-in> -->
 
 	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
 		<set-property property="contextConfigLocation" value="/WEB-INF/applicationContext.xml" />

@@ -12,7 +12,7 @@ public class DateUtil {
 	public static String getStringFromDate(Date date, Locale locale){
 		
 		ResourceBundle bundle = ResourceBundle.getBundle("com.epam.testapp.properties.ApplicationResources", locale);
-		String pattern = bundle.getString("pattern.date");
+		String pattern = bundle.getString("format.date");
 		
 		DateFormat dateFormat = new SimpleDateFormat(pattern);
 		String dateString = dateFormat.format(date);
@@ -23,7 +23,7 @@ public class DateUtil {
 	public static Date getDateFromString( String dateString, Locale locale ){
 		
 		ResourceBundle bundle = ResourceBundle.getBundle("com.epam.testapp.properties.ApplicationResources", locale);
-		String pattern = bundle.getString("pattern.date");
+		String pattern = bundle.getString("format.date");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		Date date = null;
@@ -34,4 +34,27 @@ public class DateUtil {
 		}
 		return date;
 	}
+	
+	//////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////
+	/////////   SHITCODE BELOW
+	
+	public static boolean isDateCorrect( String dateString, Locale locale ){
+		
+		ResourceBundle bundle = ResourceBundle.getBundle("com.epam.testapp.properties.ApplicationResources", locale);
+		String pattern = bundle.getString("format.date");
+		
+		Date date = null;
+		
+		try {
+			date = new SimpleDateFormat( pattern ).parse( dateString );
+		}catch (ParseException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	//////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////
 }
