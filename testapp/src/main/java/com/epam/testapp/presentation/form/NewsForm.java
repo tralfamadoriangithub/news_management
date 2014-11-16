@@ -99,16 +99,16 @@ public class NewsForm extends ActionForm {
 
 		if ( "".equals( news.getBrief() ) ) {
 			actionErrors
-					.add( "title", new ActionMessage( "msg.brief.required" ) );
+					.add( "brief", new ActionMessage( "msg.brief.required" ) );
 		}
 
 		if ( "".equals( news.getContent() ) ) {
-			actionErrors.add( "title", new ActionMessage(
+			actionErrors.add( "content", new ActionMessage(
 					"msg.content.required" ) );
 		}
 		if ( !DateUtil.isDateCorrect( dateString, locale ) ) {
 			actionErrors
-					.add( "title", new ActionMessage( "msg.date.format" ) );
+					.add( "date", new ActionMessage( "msg.date.format" ) );
 		}
 		return actionErrors;
 	}
