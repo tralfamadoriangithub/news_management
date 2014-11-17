@@ -8,10 +8,15 @@
 
 <c:choose>
 	<c:when test="${ not empty sessionScope.language }">
-		<c:set var="language" value="${ sessionScope.language }" />
+		<c:set var="language" value="${ sessionScope.language }"/>
+		<c:out value="Locale from session"/>
 	</c:when>
 	<c:otherwise>
-		<c:set var="language" value="${ pageContext.request.locale }" />
+		<c:set var="language" value="${ pageContext.request.locale }" scope="session"/>
+		<c:out value="${ language.language }"/>
+		<c:set var="${ newsForm.localeName }" value="${ language.language }"/>
+		<c:out value="Locale from request"/>
+		<c:out value="${ newsForm.localeName }"/>
 	</c:otherwise>
 </c:choose>
 
@@ -20,6 +25,7 @@
 	basename="com.epam.testapp.properties.ApplicationResources"
 	var="bundle" />
 
+<c:out value="${ newsForm.localeName }"></c:out>
 <c:choose>
 	<c:when test="${ not empty newsForm.newsList }">
 		<html:form action="/Delete">
@@ -32,19 +38,17 @@
 							<c:out value="${ news.title }" />
 						</section>
 						<section class="news_date">
-							<label> <bean:message key="label.news_date" /></label>
+							<%-- <label> <bean:message key="label.news_date" /></label> --%>
 							<fmt:message bundle="${ bundle }" key="format.date"
 								var="format" />
 							<fmt:formatDate value="${ news.date }" pattern="${ format }" />
 						</section>
 					</header>
 					
-					<setion class="news_body">
 					<section class="news_brief">
 						<label><bean:message key="label.brief" /></label>
 						<c:out value="${ news.brief }" />
 					</section>
-					</setion>
 
 					<footer class="news_footer">
 						<a href="/testapp/View.do?newsId=<c:out value='${ news.id }' />">

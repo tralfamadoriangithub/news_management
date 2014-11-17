@@ -1,0 +1,159 @@
+@CHARSET "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	box-sizing: border-box;
+	background-color: #eeeeee;
+	height: 100%;
+	text-align: center;
+}
+
+#main_wrapper {
+	box-sizing: border-box;
+	width: 1000px;
+	margin: 0px auto;
+	height: 100%;
+	background-color: white;
+	border: 1px solid black;
+}
+
+#header {
+	box-sizing: border-box;
+	height: 70px;
+	background-color: #eeeeee;
+	border: 1px solid black;
+}
+
+#header section {
+	
+}
+
+#header_title {
+	height: inherit;
+	float: left;
+	padding-left: 35px;
+}
+
+#header_title h1 {
+	height: inherit;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#language_selection {
+	float: right;
+	margin-right: 10px;
+	padding-top: 40px
+}
+
+#main_content {
+	clear: both;
+	margin-top: 10px;
+	background-color: #dddddd;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+#page_content {
+	box-sizing: border-box;
+	width: 77%;
+	height: 100%;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	float: right;
+	background-color: #aaaaaa;
+	border: 1px solid black;
+}
+
+#footer {
+	clear: both;
+	border: 1px solid black;
+}
+
+#aside {
+	box-sizing: border-box;
+	float: left;
+	margin-left: 15px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	width: 20%;
+	background-color: #bbbbbb;
+}
+
+#aside_list_title {
+	background-color: #777777;
+	text-align: center;
+	color: white;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-left: 5px;
+}
+
+#aside_list {
+	float: right;
+	background-color: white;
+	margin-top: 5px;
+	margin-right: 5px;
+	padding-top: 10px;
+	padding-bottom: 15px;
+	width: 80%;
+	list-style: none;
+}
+
+.news {
+	background-color: #ffffff;
+	width: 90%;
+	margin: 10px auto;
+}
+
+.news_title {
+	box-sizing: border-box;
+	width: 80%;
+	float: left;
+	text-align: left;
+	padding: 10px;
+	font-weight: bold;
+}
+
+.news_date {
+	box-sizing: border-box;
+	width: 20%;
+	float: right;
+	text-align: right;
+	padding-right: 10px;
+	padding-top: 10px;
+	text-decoration: underline;
+}
+
+.news_brief {
+	box-sizing: border-box;
+	clear: both;
+	width: 80%;
+	padding-left: 10px;
+	text-align: left;
+}
+
+.news_footer {
+	text-align: right;
+	padding-right: 10px;
+}
+
+.news_footer a {
+	text-decoration: none;
+}
+
+input[type="submit"] {
+	width: 100px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border: 1px solid black;
+	border-radius: 3px;
+}

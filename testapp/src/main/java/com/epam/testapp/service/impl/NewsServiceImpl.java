@@ -27,8 +27,10 @@ public class NewsServiceImpl implements INewsService {
 	}
 
 	@Override
-	public News saveNews( News news, String dateString, Locale locale ) {
+	public News saveNews( News news, String dateString, HttpServletRequest request ) {
 
+		HttpSession session = request.getSession();
+		Locale locale = (Locale) session.getAttribute( "language" );
 		Date date = DateUtil.getDateFromString( dateString, locale );
 		news.setDate( date );
 		News savedNews = newsDao.save( news );

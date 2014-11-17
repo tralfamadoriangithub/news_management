@@ -27,12 +27,10 @@ public class NewsAction extends MappingDispatchAction {
 
 		NewsForm newsForm = (NewsForm) form;
 
-		if ( newsForm.getNewsList().isEmpty() ) {
-			List<News> newsList = newsService.getNewsList();
-			newsForm.getNewsList().addAll( newsList );
-		}
-		String pageName = ProjectPages.NEWS_LIST_PAGE;
+		List<News> newsList = newsService.getNewsList();
+		newsForm.setNewsList( newsList );
 
+		String pageName = ProjectPages.NEWS_LIST_PAGE;
 		newsService.setCurrentPage( request, pageName );
 
 		return mapping.findForward( pageName );
@@ -42,15 +40,12 @@ public class NewsAction extends MappingDispatchAction {
 			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
-		
 		News news = new News();
 		Date date = new Date( System.currentTimeMillis() );
 		news.setDate( date );
 		newsForm.setNews( news );
-		String dateString = DateUtil.getStringFromDate( date, newsForm.getLocale() );
-		newsForm.setDateString( dateString );
-		String pageName = ProjectPages.ADD_NEWS_PAGE;
 
+		String pageName = ProjectPages.ADD_NEWS_PAGE;
 		newsService.setCurrentPage( request, pageName );
 
 		return mapping.findForward( pageName );
@@ -63,8 +58,7 @@ public class NewsAction extends MappingDispatchAction {
 		News newNews = newsForm.getNews();
 
 		newNews = newsService.saveNews( newNews, newsForm.getDateString(),
-				newsForm.getLocale() );
-		newsForm.getNewsList().add( newNews );
+				request );
 
 		return mapping.findForward( ProjectPages.MAIN_PAGE );
 	}
@@ -77,12 +71,7 @@ public class NewsAction extends MappingDispatchAction {
 		String[] stringNewsId = newsForm.getSelectedNewsId();
 		List<News> newsList = newsForm.getNewsList();
 
-		List<News> updatedNewsList = newsService.removeNews( stringNewsId,
-				newsList );
-
-		if ( updatedNewsList != null ) {
-			newsForm.setNewsList( updatedNewsList );
-		}
+		newsService.removeNews( stringNewsId, newsList );
 
 		return mapping.findForward( ProjectPages.MAIN_PAGE );
 	}
@@ -125,13 +114,11 @@ public class NewsAction extends MappingDispatchAction {
 
 	public ActionForward changeLocale( ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response ) {
-
+		
 		NewsForm newsForm = (NewsForm) form;
 		Locale locale = newsService.changeLocale( newsForm.getLocaleName(),
 				request );
-		newsForm.setLocale( locale );
 		setLocale( request, locale );
-
 		return mapping.findForward( newsService.getCurrentPage( request ) );
 	}
 
@@ -140,7 +127,6 @@ public class NewsAction extends MappingDispatchAction {
 	}
 
 	public void setNewsService( INewsService newsService ) {
-
 		this.newsService = newsService;
 	}
 

@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DateUtil {
 	
@@ -35,26 +37,16 @@ public class DateUtil {
 		return date;
 	}
 	
-	//////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
-	/////////   SHITCODE BELOW
-	
-	public static boolean isDateCorrect( String dateString, Locale locale ){
+	public static boolean isDateCorrect( String dateString, String localeName ){
 		
-		ResourceBundle bundle = ResourceBundle.getBundle("com.epam.testapp.properties.ApplicationResources", locale);
-		String pattern = bundle.getString("format.date");
+		ResourceBundle bundle = ResourceBundle.getBundle("com.epam.testapp.properties.ApplicationResources", new Locale( localeName ));
+		String datePattern = bundle.getString("pattern.date");
 		
-		Date date = null;
-		
-		try {
-			date = new SimpleDateFormat( pattern ).parse( dateString );
-		}catch (ParseException e) {
-			e.printStackTrace();
-			return false;
+		Pattern pattern = Pattern.compile( datePattern );
+		Matcher matcher = pattern.matcher( dateString );
+		if(matcher.find()){
+			return true;
 		}
-		return true;
+		return false;
 	}
-	
-	//////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////////////
 }

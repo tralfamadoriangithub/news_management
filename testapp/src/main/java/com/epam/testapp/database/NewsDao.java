@@ -24,7 +24,8 @@ public class NewsDao implements INewsDao {
 
 		try {
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery( "SELECT * FROM NEWS" );
+			ResultSet resultSet = statement
+					.executeQuery( "SELECT * FROM NEWS ORDER BY NEWS_DATE DESC" );
 			newsList = new ArrayList<>();
 
 			while ( resultSet.next() ) {
@@ -45,23 +46,34 @@ public class NewsDao implements INewsDao {
 
 		Connection connection = connectionPool.getConnection();
 
-		java.sql.Date date = new Date( news.getDate().getTime() );
-
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(
-							"INSERT INTO news (news_title, news_date, news_brief, news_content) VALUES (?,?,?,?)",
-							new String[] { "NEWS_ID" } );
+
+			PreparedStatement preparedStatement;
+
+			if ( news.getId() == 0 ) {
+				preparedStatement = connection
+						.prepareStatement(
+								"INSERT INTO news (news_title, news_date, news_brief, news_content) VALUES (?,?,?,?)",
+								new String[] { "NEWS_ID" } );
+			} else {
+				preparedStatement = connection
+						.prepareStatement( "UPDATE news SET news_title=?, news_date=?, news_brief=?, news_content=? WHERE news_id = ?" );
+				preparedStatement.setInt( 5, news.getId() );
+			}
+			java.sql.Date date = new Date( news.getDate().getTime() );
 			preparedStatement.setString( 1, news.getTitle() );
 			preparedStatement.setDate( 2, date );
 			preparedStatement.setString( 3, news.getBrief() );
 			preparedStatement.setString( 4, news.getContent() );
 			preparedStatement.executeUpdate();
-			ResultSet resultSet = preparedStatement.getGeneratedKeys();
-			if ( resultSet.next() ) {
-				news.setId( resultSet.getInt( 1 ) );
+
+			if ( news.getId() == 0 ) {
+				ResultSet resultSet = preparedStatement.getGeneratedKeys();
+				if ( resultSet.next() ) {
+					news.setId( resultSet.getInt( 1 ) );
+				}
+				resultSet.close();
 			}
-			resultSet.close();
 			preparedStatement.close();
 		} catch ( SQLException e ) {
 			e.printStackTrace();
@@ -76,7 +88,6 @@ public class NewsDao implements INewsDao {
 
 		Connection connection = connectionPool.getConnection();
 		try {
-			// connection.setAutoCommit(false);
 			PreparedStatement preparedStatement = connection
 					.prepareStatement( "DELETE FROM news WHERE news_id = ?" );
 			for ( Integer i : newsId ) {
@@ -85,7 +96,6 @@ public class NewsDao implements INewsDao {
 			}
 			preparedStatement.executeBatch();
 			preparedStatement.close();
-			// connection.setAutoCommit(true);
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 		} finally {

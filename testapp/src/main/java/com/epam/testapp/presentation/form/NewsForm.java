@@ -1,5 +1,6 @@
 package com.epam.testapp.presentation.form;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -15,20 +16,25 @@ import org.apache.struts.action.ActionMessage;
 import com.epam.testapp.entity.News;
 import com.epam.testapp.util.DateUtil;
 
-public class NewsForm extends ActionForm {
+public class NewsForm extends ActionForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private News news;
-	private Locale locale;
 	private String dateString;
 	private String localeName;
 	private List<News> newsList;
 	private String[] selectedNewsId;
 
-	{
-		news = new News();
-		newsList = new ArrayList<>();
-		locale = Locale.getDefault();
+	public NewsForm() {
+	}
+
+	public NewsForm( List<News> newsList, News news, Locale locale,
+			String dateString, String localeName, String[] selectedNewsId ) {
+		this.newsList = newsList;
+		this.news = news;
+		this.dateString = dateString;
+		this.localeName = localeName;
+		this.selectedNewsId = selectedNewsId;
 	}
 
 	public News getNews() {
@@ -63,14 +69,6 @@ public class NewsForm extends ActionForm {
 		newsList.add( news );
 	}
 
-	public Locale getLocale() {
-		return locale;
-	}
-
-	public void setLocale( Locale locale ) {
-		this.locale = locale;
-	}
-
 	public String[] getSelectedNewsId() {
 		return selectedNewsId;
 	}
@@ -92,7 +90,7 @@ public class NewsForm extends ActionForm {
 			HttpServletRequest request ) {
 		ActionErrors actionErrors = new ActionErrors();
 
-		if ( "".equals( news.getTitle() ) || news.getTitle().length() < 10 ) {
+		if ( "".equals( news.getTitle() ) ) {
 			actionErrors
 					.add( "title", new ActionMessage( "msg.title.required" ) );
 		}
@@ -106,10 +104,16 @@ public class NewsForm extends ActionForm {
 			actionErrors.add( "content", new ActionMessage(
 					"msg.content.required" ) );
 		}
-		if ( !DateUtil.isDateCorrect( dateString, locale ) ) {
-			actionErrors
-					.add( "date", new ActionMessage( "msg.date.format" ) );
+
+		if ( localeName != null && !localeName.equals( "" ) ) {
+			if ( !DateUtil.isDateCorrect( dateString, localeName ) ) {
+				actionErrors
+						.add( "date", new ActionMessage( "msg.date.format" ) );
+			}
+		} else {
+			System.out.println( "FUCKING NULL" );
 		}
+
 		return actionErrors;
 	}
 

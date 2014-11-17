@@ -8,11 +8,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="/css/style.css" rel="stylesheet" type="text/css" />
+<link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css" />
 <title><tiles:getAsString name="title" /></title>
 </head>
 <body>
-	
+
 	<section id="main_wrapper">
 		<header id="header">
 			<tiles:insert attribute="header" />
@@ -23,7 +23,7 @@
 				<tiles:insert attribute="aside" />
 			</aside>
 			<section id="page_content">
-				<tiles:insert attribute="main_content" />
+				<tiles:insert attribute="page_content" />
 			</section>
 		</section>
 

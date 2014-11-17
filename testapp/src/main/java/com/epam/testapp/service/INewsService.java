@@ -12,7 +12,7 @@ public interface INewsService {
 	
 	public List<News> getNewsList();
 
-	public News saveNews(News news, String dateString, Locale locale);
+	public News saveNews(News news, String dateString, HttpServletRequest request);
 
 	public List<News> removeNews(String[] stringNewsId, List<News> newsList );
 

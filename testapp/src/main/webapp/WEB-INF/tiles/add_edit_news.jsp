@@ -37,8 +37,6 @@
 	<label><bean:message key="label.news_date" /></label>
 	<input type="text" name="dateString"
 		value="<c:out value='${ formattedDate }'/>" />
-	<%-- <html:text property="dateString">
-	</html:text> --%>
 	<br>
 
 	<label><bean:message key="label.brief" /></label>
