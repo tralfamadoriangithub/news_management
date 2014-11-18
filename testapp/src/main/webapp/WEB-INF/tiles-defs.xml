@@ -25,4 +25,9 @@
 		<put name="title" value="View News"/>
 		<put name="page_content" value="/WEB-INF/tiles/view_news_page.jsp"/>
 	</definition>
+	
+	<definition name="error.page" extends="layout.page">
+		<put name="title" value="Error"/>
+		<put name="page_content" value="/WEB-INF/tiles/error_page.jsp"/>
+	</definition>
 </tiles-definitions>

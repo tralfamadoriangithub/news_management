@@ -16,13 +16,14 @@ public class NewsDao implements INewsDao {
 	private ConnectionPool connectionPool;
 
 	@Override
-	public List<News> getList() {
+	public List<News> getList() throws DaoTestappException {
 
-		Connection connection = connectionPool.getConnection();
+		Connection connection = null;
 
 		ArrayList<News> newsList = null;
 
 		try {
+			connection = connectionPool.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery( "SELECT * FROM NEWS ORDER BY NEWS_DATE DESC" );
@@ -34,7 +35,10 @@ public class NewsDao implements INewsDao {
 			resultSet.close();
 			statement.close();
 		} catch ( SQLException e ) {
-			e.printStackTrace();
+			throw new DaoTestappException(
+					"NewsDao SQL exception in getList method", e );
+		} catch ( ConnectionPoolTestappException e ) {
+			throw new DaoTestappException( e.getMessage(), e );
 		} finally {
 			releaseConnection( connection );
 		}
@@ -42,12 +46,12 @@ public class NewsDao implements INewsDao {
 	}
 
 	@Override
-	public News save( News news ) {
+	public News save( News news ) throws DaoTestappException {
 
-		Connection connection = connectionPool.getConnection();
+		Connection connection = null;
 
 		try {
-
+			connection = connectionPool.getConnection();
 			PreparedStatement preparedStatement;
 
 			if ( news.getId() == 0 ) {
@@ -76,7 +80,10 @@ public class NewsDao implements INewsDao {
 			}
 			preparedStatement.close();
 		} catch ( SQLException e ) {
-			e.printStackTrace();
+			throw new DaoTestappException(
+					"NewsDao SQL exception in save method", e );
+		} catch ( ConnectionPoolTestappException e ) {
+			throw new DaoTestappException( e.getMessage(), e );
 		} finally {
 			releaseConnection( connection );
 		}
@@ -84,10 +91,11 @@ public class NewsDao implements INewsDao {
 	}
 
 	@Override
-	public void remove( List<Integer> newsId ) {
+	public void remove( List<Integer> newsId ) throws DaoTestappException {
 
-		Connection connection = connectionPool.getConnection();
+		Connection connection = null;
 		try {
+			connection = connectionPool.getConnection();
 			PreparedStatement preparedStatement = connection
 					.prepareStatement( "DELETE FROM news WHERE news_id = ?" );
 			for ( Integer i : newsId ) {
@@ -97,19 +105,23 @@ public class NewsDao implements INewsDao {
 			preparedStatement.executeBatch();
 			preparedStatement.close();
 		} catch ( SQLException e ) {
-			e.printStackTrace();
+			throw new DaoTestappException(
+					"NewsDao SQL exception in remove method", e );
+		} catch ( ConnectionPoolTestappException e ) {
+			throw new DaoTestappException( e.getMessage(), e );
 		} finally {
 			releaseConnection( connection );
 		}
 	}
 
 	@Override
-	public News fetchById( int id ) {
+	public News fetchById( int id ) throws DaoTestappException {
 
-		Connection connection = connectionPool.getConnection();
+		Connection connection = null;
 		News news = new News();
 
 		try {
+			connection = connectionPool.getConnection();
 			PreparedStatement preparedStatement = connection
 					.prepareStatement( "SELECT * FROM news WHERE news_id = ?" );
 			preparedStatement.setInt( 1, id );
@@ -118,7 +130,10 @@ public class NewsDao implements INewsDao {
 			resultSet.close();
 			preparedStatement.close();
 		} catch ( SQLException e ) {
-			e.printStackTrace();
+			throw new DaoTestappException(
+					"NewsDao SQL exception in fetchById method", e );
+		} catch ( ConnectionPoolTestappException e ) {
+			throw new DaoTestappException( e.getMessage(), e );
 		} finally {
 			releaseConnection( connection );
 		}
@@ -141,9 +156,15 @@ public class NewsDao implements INewsDao {
 		return news;
 	}
 
-	private void releaseConnection( Connection connection ) {
-		connectionPool.releaseConnection( connection );
-		connection = null;
+	private void releaseConnection( Connection connection )
+			throws DaoTestappException {
+		try {
+			connectionPool.releaseConnection( connection );
+		} catch ( ConnectionPoolTestappException e ) {
+			throw new DaoTestappException( e.getMessage(), e );
+		} finally {
+			connection = null;
+		}
 	}
 
 	public ConnectionPool getConnectionPool() {

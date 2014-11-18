@@ -92,23 +92,23 @@ public class NewsForm extends ActionForm implements Serializable {
 
 		if ( "".equals( news.getTitle() ) ) {
 			actionErrors
-					.add( "title", new ActionMessage( "msg.title.required" ) );
+					.add( "title", new ActionMessage( "msg.title_required" ) );
 		}
 
 		if ( "".equals( news.getBrief() ) ) {
 			actionErrors
-					.add( "brief", new ActionMessage( "msg.brief.required" ) );
+					.add( "brief", new ActionMessage( "msg.brief_required" ) );
 		}
 
 		if ( "".equals( news.getContent() ) ) {
 			actionErrors.add( "content", new ActionMessage(
-					"msg.content.required" ) );
+					"msg.content_required" ) );
 		}
 
 		if ( localeName != null && !localeName.equals( "" ) ) {
 			if ( !DateUtil.isDateCorrect( dateString, localeName ) ) {
 				actionErrors
-						.add( "date", new ActionMessage( "msg.date.format" ) );
+						.add( "date", new ActionMessage( "msg.date_format" ) );
 			}
 		} else {
 			System.out.println( "FUCKING NULL" );

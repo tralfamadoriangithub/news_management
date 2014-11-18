@@ -4,6 +4,16 @@
 
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
+<filter>
+		<filter-name>TestappFilter</filter-name>
+		<display-name>TestappFilter</display-name>
+		<description></description>
+		<filter-class>com.epam.testapp.filter.TestappFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>TestappFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<servlet>
 		<servlet-name>action</servlet-name>

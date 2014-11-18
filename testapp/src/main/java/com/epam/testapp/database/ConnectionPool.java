@@ -21,7 +21,7 @@ public class ConnectionPool {
 		this.connectionProperties = connectionProperties;
 	}
 
-	public static void initialize() {
+	public static void initialize() throws ConnectionPoolTestappException {
 
 		System.out.println(connectionProperties);
 		try {
@@ -41,40 +41,40 @@ public class ConnectionPool {
 					freeConnections.add(conn);
 
 				} catch (SQLException e) {
-					// TODO
+					throw new ConnectionPoolTestappException( "Connection pool init exception", e );
 				}
 			}
 
 		} catch (ClassNotFoundException e) {
-			// TODO
+			throw new ConnectionPoolTestappException( "Connection pool init exception", e );
 		}
 	}
 
-	public Connection getConnection() {
+	public Connection getConnection() throws ConnectionPoolTestappException {
 		Connection connection = null;
 		try {
 			connection = freeConnections.take();
 			buisyCoonnections.add(connection);
 		} catch (InterruptedException e) {
-			// TODO
+			throw new ConnectionPoolTestappException( "Connection pool getConnection exception", e );
 		}
 		return connection;
 	}
 
-	public void releaseConnection(Connection conn) {
+	public void releaseConnection(Connection conn) throws ConnectionPoolTestappException {
 		if (buisyCoonnections.contains(conn)) {
 			freeConnections.add(conn);
 			buisyCoonnections.remove(conn);
 		} else {
-			// TODO
+			throw new ConnectionPoolTestappException( "Connection pool releaseConnection exception" );
 		}
 	}
 
-	private void closeConnections(Collection<Connection> connectionArray) {
+	private void closeConnections(Collection<Connection> connectionArray) throws ConnectionPoolTestappException {
 		connectionArray.forEach(conn -> {
 			try {
 				conn.close();
-			} catch (SQLException e) {
+			} catch (SQLException e) {	
 			}
 		});
 	}

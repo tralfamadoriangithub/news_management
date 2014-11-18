@@ -8,11 +8,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="<c:url value='/js/messages.jsp'/>" type="text/javascript"></script>
+<script src="<c:url value='/js/script.js'/>" type="text/javascript"></script>
 <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css" />
 <title><tiles:getAsString name="title" /></title>
 </head>
-<body>
 
+<body>
 	<section id="main_wrapper">
 		<header id="header">
 			<tiles:insert attribute="header" />
@@ -31,6 +33,5 @@
 			<tiles:insert attribute="footer" />
 		</footer>
 	</section>
-
 </body>
 </html>

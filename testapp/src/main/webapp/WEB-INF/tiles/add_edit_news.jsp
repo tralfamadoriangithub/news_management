@@ -24,7 +24,7 @@
 </font>
 <br>
 
-<html:form action="/Save">
+<html:form action="/Save" onsubmit="return verifyForm(this);">
 
 	<label><bean:message key="label.news_title" /></label>
 	<html:text property="news.title">
@@ -34,26 +34,27 @@
 	<fmt:message bundle="${ bundle }" key="format.date" var="format" />
 	<fmt:formatDate var="formattedDate" value="${ newsForm.news.date }"
 		pattern="${ format }" />
+		
 	<label><bean:message key="label.news_date" /></label>
 	<input type="text" name="dateString"
 		value="<c:out value='${ formattedDate }'/>" />
 	<br>
-
+	
 	<label><bean:message key="label.brief" /></label>
-	<html:textarea property="news.brief">
+	<html:textarea property="news.brief" cols="50" rows="4">
 	</html:textarea>
 	<br>
 
 	<label><bean:message key="label.content" /></label>
-	<html:textarea property="news.content">
+	<html:textarea property="news.content" cols="50" rows="7">
 	</html:textarea>
+	<br>
 	<br>
 
 	<html:submit>
 		<bean:message key="button.save" />
 	</html:submit>
-	<html:cancel>
-		<bean:message key="button.cancel" />
-	</html:cancel>
+	<input type="button" value="<bean:message key='button.cancel' />"/>
+
 
 </html:form>

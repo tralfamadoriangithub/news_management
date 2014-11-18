@@ -8,9 +8,12 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.epam.testapp.database.DaoTestappException;
 import com.epam.testapp.database.INewsDao;
 import com.epam.testapp.entity.News;
+import com.epam.testapp.service.AttributeName;
 import com.epam.testapp.service.INewsService;
+import com.epam.testapp.service.ServiceTestappException;
 import com.epam.testapp.service.UIHelper;
 import com.epam.testapp.util.DateUtil;
 
@@ -19,27 +22,37 @@ public class NewsServiceImpl implements INewsService {
 	private INewsDao newsDao;
 
 	@Override
-	public List<News> getNewsList() {
+	public List<News> getNewsList() throws ServiceTestappException {
 
-		List<News> newsList = newsDao.getList();
+		List<News> newsList = null;
+		try {
+			newsList = newsDao.getList();
+		} catch ( DaoTestappException e ) {
+			throw new ServiceTestappException( e.getMessage(), e );
+		}
 
 		return newsList;
 	}
 
 	@Override
-	public News saveNews( News news, String dateString, HttpServletRequest request ) {
+	public News saveNews( News news, String dateString, HttpServletRequest request ) throws ServiceTestappException {
 
 		HttpSession session = request.getSession();
-		Locale locale = (Locale) session.getAttribute( "language" );
+		Locale locale = (Locale) session.getAttribute( AttributeName.LANGUAGE );
 		Date date = DateUtil.getDateFromString( dateString, locale );
 		news.setDate( date );
-		News savedNews = newsDao.save( news );
+		News savedNews = null;
+		try {
+			savedNews = newsDao.save( news );
+		} catch ( DaoTestappException e ) {
+			throw new ServiceTestappException( e.getMessage(), e );
+		}
 
 		return savedNews;
 	}
 
 	@Override
-	public List<News> removeNews( String[] stringNewsId, List<News> newsList ) {
+	public List<News> removeNews( String[] stringNewsId, List<News> newsList ) throws ServiceTestappException {
 
 		List<News> updatedList = null;
 
@@ -50,7 +63,11 @@ public class NewsServiceImpl implements INewsService {
 				intNewsId.add( Integer.parseInt( stringNewsId[i] ) );
 			}
 
-			newsDao.remove( intNewsId );
+			try {
+				newsDao.remove( intNewsId );
+			} catch ( DaoTestappException e ) {
+				throw new ServiceTestappException( e.getMessage(), e );
+			}
 			updatedList = UIHelper.removeNewsFromList( newsList, intNewsId );
 		}
 		return updatedList;
@@ -76,19 +93,30 @@ public class NewsServiceImpl implements INewsService {
 
 		Locale locale = new Locale( localeName );
 		HttpSession session = request.getSession();
-		session.setAttribute( "language", locale );
+		session.setAttribute( AttributeName.LANGUAGE, locale );
 		return locale;
 	}
 
 	@Override
 	public void setCurrentPage( HttpServletRequest request, String pageName ) {
 		HttpSession session = request.getSession();
-		session.setAttribute( "current_page", pageName );
+		session.setAttribute( AttributeName.CURRENT_PAGE, pageName );
 	}
 
 	@Override
 	public String getCurrentPage( HttpServletRequest request ) {
-		return (String) request.getSession().getAttribute( "current_page" );
+		return (String) request.getSession().getAttribute( AttributeName.CURRENT_PAGE );
+	}
+
+	@Override
+	public void setPreviousPage( HttpServletRequest request, String pageName ) {
+		HttpSession session = request.getSession();
+		session.setAttribute( AttributeName.PREVIOUS_PAGE, pageName );
+	}
+
+	@Override
+	public String getPreviousPage( HttpServletRequest request ) {
+		return (String) request.getSession().getAttribute( AttributeName.PREVIOUS_PAGE );
 	}
 
 }

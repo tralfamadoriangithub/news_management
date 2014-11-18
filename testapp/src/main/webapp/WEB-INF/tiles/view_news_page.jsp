@@ -51,7 +51,7 @@
 
 		<%-- <bean:define id="news" name="newsForm" property="news"/> --%>
 
-		<form action="/testapp/Delete.do" method="post">
+		<form action="/testapp/Delete.do" method="post" onsubmit="return confirmDialog();">
 		
 			<input type="hidden" name="selectedNewsId"
 				value="<c:out value='${ newsForm.news.id }' />">

@@ -28,7 +28,8 @@
 <c:out value="${ newsForm.localeName }"></c:out>
 <c:choose>
 	<c:when test="${ not empty newsForm.newsList }">
-		<html:form action="/Delete">
+	
+		<html:form action="/Delete" onsubmit="return confirmDelete();">
 			<c:forEach var="news" items="${ newsForm.newsList }">
 				<article class="news">
 				
