@@ -94,16 +94,25 @@ public class NewsForm extends ActionForm implements Serializable {
 		if ( "".equals( news.getTitle() ) ) {
 			actionErrors
 					.add( "title", new ActionMessage( "msg.title_required" ) );
+		}else if( news.getTitle().length() > 100 ){
+			actionErrors
+			.add( "title", new ActionMessage( "msg.title_length" ) );
 		}
 
 		if ( "".equals( news.getBrief() ) ) {
 			actionErrors
 					.add( "brief", new ActionMessage( "msg.brief_required" ) );
+		}else if( news.getBrief().length() > 500 ){
+			actionErrors
+			.add( "brief", new ActionMessage( "msg.brief_length" ) );
 		}
 
 		if ( "".equals( news.getContent() ) ) {
 			actionErrors.add( "content", new ActionMessage(
 					"msg.content_required" ) );
+		}else if( news.getContent().length() > 2000 ){
+			actionErrors
+			.add( "content", new ActionMessage( "msg.content_length" ) );
 		}
 
 		if ( localeName != null && !localeName.equals( "" ) ) {

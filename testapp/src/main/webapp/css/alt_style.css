@@ -18,13 +18,25 @@ body {
 	text-align: center;
 }
 
+a{
+	color : #00f;
+}
+
+a:visited{
+	color : #00f;
+}
+
+a:hover{
+	color : #ff8000;
+}
+
 #main_wrapper {
 	box-sizing: border-box;
 	width: 1000px;
 	margin: 5px auto;
 	min-height: 99%;
 	background-color: white;
-	border: 1px solid #999;
+	border: 1px solid #000;
 }
 
 #inner_wrapper {
@@ -76,7 +88,7 @@ body {
 #page_content {
 	width: 77%;
 	margin-left: 5px;
-	border: 1px solid black;
+	border: 1px solid #999;
 	min-height: 810px;
 }
 
@@ -128,7 +140,7 @@ body {
 	left: 7px;
 	width: 2px;
 	height: 2px;
-	border: 5px solid #7c86cb;
+	border: 5px solid #02c7dd;
 	border-radius: 9px;
 	top: 4px;
 	left: 7px;
@@ -182,6 +194,11 @@ body {
 
 .news_footer a {
 	text-decoration: none;
+}
+
+#news_form_button_delete{
+	float: right;
+	margin-right: 25px;
 }
 
 #addEditNewsSection {

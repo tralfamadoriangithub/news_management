@@ -7,18 +7,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 
-<c:choose>
-	<c:when test="${ not empty sessionScope.language }">
-		<c:set var="language" value="${ sessionScope.language }" />
-	</c:when>
-	<c:otherwise>
-		<c:set var="language" value="${ pageContext.request.locale }"
-			scope="session" />
-		<c:set target="${ newsForm }" property="localeName"
-			value="${ language.language }" />
-	</c:otherwise>
-</c:choose>
-
 <section class="headLink">
 	<html:link action="/List">
 		<bean:message key="label.news" />
@@ -66,9 +54,9 @@
 
 			</article>
 		</logic:iterate>
-		<html:submit>
+		<section id="news_form_button_delete"> <html:submit>
 			<bean:message key="button.delete" />
-		</html:submit>
+		</html:submit> </section>
 	</html:form>
 </logic:notEmpty>
 
@@ -78,48 +66,14 @@
 	</h1>
 </logic:empty>
 
-<%-- <c:choose>
-	<c:when test="${ not empty newsForm.newsList }">
-		<html:form action="/Delete" onsubmit="return confirmDelete();">
-			<c:forEach var="news" items="${ newsForm.newsList }">
-
-				<article class="news">
-
-					<header class="news_header">
-						<section class="news_title">
-							<c:out value="${ news.title }" />
-						</section>
-						<section class="news_date">
-							<fmt:message bundle="${ bundle }" key="format.date" var="format" />
-							<fmt:formatDate value="${ news.date }" pattern="${ format }" />
-						</section>
-					</header>
-
-					<section class="news_brief">
-						<c:out value="${ news.brief }" />
-					</section>
-
-					<footer class="news_footer">
-						<a href="/testapp/View.do?newsId=<c:out value='${ news.id }' />">
-							<bean:message key="label.view" />
-						</a> &nbsp; <a
-							href="/testapp/Edit.do?newsId=<c:out value='${ news.id }' />"><bean:message
-								key="label.edit" /></a>&nbsp;
-						<html:multibox property="selectedNewsId">
-							<c:out value="${ news.id }" />
-						</html:multibox>
-					</footer>
-
-				</article>
-			</c:forEach>
-			<html:submit>
-				<bean:message key="button.delete" />
-			</html:submit>
-		</html:form>
+<c:choose>
+	<c:when test="${ not empty sessionScope.language }">
+		<c:set var="language" value="${ sessionScope.language }" />
 	</c:when>
 	<c:otherwise>
-		<h1>
-			<bean:message key="msg.no_news" />
-		</h1>
+		<c:set var="language" value="${ pageContext.request.locale }"
+			scope="session" />
+		<c:set target="${ newsForm }" property="localeName"
+			value="${ language.language }" />
 	</c:otherwise>
-</c:choose> --%>
+</c:choose>

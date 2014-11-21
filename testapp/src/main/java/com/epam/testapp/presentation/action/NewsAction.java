@@ -68,16 +68,13 @@ public class NewsAction extends MappingDispatchAction {
 			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
-		int tempNewsId = newsForm.getNews().getId();
 		News news = new News();
 		Date date = new Date( System.currentTimeMillis() );
-		//news.setId( tempNewsId );
 		news.setDate( date );
 		newsForm.setNews( news );
 
 		String pageName = ProjectPages.ADD_NEWS_PAGE;
 		newsService.setCurrentPage( request, pageName );
-		//newsService.setPreviousPage( request, pageName );
 
 		return mapping.findForward( pageName );
 	}
@@ -108,7 +105,6 @@ public class NewsAction extends MappingDispatchAction {
 
 		String pageName = ProjectPages.ADD_NEWS_PAGE;
 		newsService.setCurrentPage( request, pageName );
-		//newsService.setPreviousPage( request, pageName );
 
 		return mapping.findForward( pageName );
 	}

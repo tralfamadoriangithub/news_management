@@ -16,6 +16,18 @@ body {
 	text-align: center;
 }
 
+a{
+	color : #00f;
+}
+
+a:visited{
+	color : #00f;
+}
+
+a:hover{
+	color : #ff8000;
+}
+
 #main_wrapper {
 	box-sizing: border-box;
 	width: 1000px;
@@ -64,7 +76,6 @@ body {
 	box-sizing: border-box;
 	width: 77%;
 	min-height: 810px;
-	/* overflow: auto; */
 	margin-right: 5px;
 	margin-bottom: 5px;
 	padding-bottom: 5px;
@@ -121,9 +132,9 @@ body {
 	left: 7px;
 	width: 2px;
 	height: 2px;
-	border: 5px solid #7c86cb;
+	border: 5px solid #02c7dd;
 	border-radius: 9px;
-	top: 4px;
+	top: 3px;
 	left: 7px;
 }
 
@@ -175,6 +186,11 @@ body {
 
 .news_footer a {
 	text-decoration: none;
+}
+
+#news_form_button_delete{
+	float: right;
+	margin-right: 25px;
 }
 
 #addEditNewsSection {
@@ -258,6 +274,7 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
 	background: #bbb;
+	cursor: pointer;
 }
 
 input[type="button"] {
@@ -273,4 +290,5 @@ input[type="button"] {
 
 input[type="button"]:hover {
 	background: #bbb;
+	cursor: pointer;
 }

@@ -53,8 +53,6 @@ public class NewsServiceImpl implements INewsService {
 	@Override
 	public void removeNews( String[] stringNewsId  ) throws ServiceTestappException {
 
-		List<News> updatedList = null;
-
 		if ( stringNewsId != null ) {
 			List<Integer> intNewsId = new ArrayList<>( stringNewsId.length );
 
