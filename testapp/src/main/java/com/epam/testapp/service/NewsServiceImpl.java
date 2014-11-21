@@ -19,8 +19,7 @@ import com.epam.testapp.util.DateUtil;
 public class NewsServiceImpl implements INewsService {
 
 	private INewsDao newsDao;
-	
-	
+
 	@Override
 	public List<News> getNewsList() throws ServiceTestappException {
 
@@ -34,7 +33,8 @@ public class NewsServiceImpl implements INewsService {
 	}
 
 	@Override
-	public News saveNews( News news, String dateString, HttpServletRequest request ) throws ServiceTestappException {
+	public News saveNews( News news, String dateString,
+			HttpServletRequest request ) throws ServiceTestappException {
 
 		HttpSession session = request.getSession();
 		Locale locale = (Locale) session.getAttribute( AttributeName.LANGUAGE );
@@ -51,15 +51,14 @@ public class NewsServiceImpl implements INewsService {
 	}
 
 	@Override
-	public void removeNews( String[] stringNewsId  ) throws ServiceTestappException {
+	public void removeNews( Integer[] newsId ) throws ServiceTestappException {
 
-		if ( stringNewsId != null ) {
-			List<Integer> intNewsId = new ArrayList<>( stringNewsId.length );
+		if ( newsId != null ) {
 
-			for ( int i = 0; i < stringNewsId.length; i++ ) {
-				intNewsId.add( Integer.parseInt( stringNewsId[i] ) );
+			List<Integer> intNewsId = new ArrayList<Integer>();
+			for ( Integer id : newsId ) {
+				intNewsId.add( id );
 			}
-
 			try {
 				newsDao.remove( intNewsId );
 			} catch ( DaoTestappException e ) {
@@ -69,7 +68,7 @@ public class NewsServiceImpl implements INewsService {
 	}
 
 	@Override
-	public News getSelectedNews( int newsId  ) throws ServiceTestappException {
+	public News getSelectedNews( int newsId ) throws ServiceTestappException {
 
 		News selectedNews;
 		try {
@@ -104,7 +103,8 @@ public class NewsServiceImpl implements INewsService {
 
 	@Override
 	public String getCurrentPage( HttpServletRequest request ) {
-		return (String) request.getSession().getAttribute( AttributeName.CURRENT_PAGE );
+		return (String) request.getSession().getAttribute(
+				AttributeName.CURRENT_PAGE );
 	}
 
 	@Override
@@ -115,7 +115,8 @@ public class NewsServiceImpl implements INewsService {
 
 	@Override
 	public String getPreviousPage( HttpServletRequest request ) {
-		return (String) request.getSession().getAttribute( AttributeName.PREVIOUS_PAGE );
+		return (String) request.getSession().getAttribute(
+				AttributeName.PREVIOUS_PAGE );
 	}
 
 }

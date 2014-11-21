@@ -120,8 +120,6 @@ public class NewsDao implements INewsDao {
 		Connection connection = null;
 		News news = null;
 
-		System.out.println( "News ID " + id );
-
 		try {
 			connection = connectionPool.getConnection();
 			PreparedStatement preparedStatement = connection
@@ -131,7 +129,6 @@ public class NewsDao implements INewsDao {
 			if ( resultSet.next() ) {
 				news = getNewsFromResutSet( resultSet );
 			}
-			System.out.println( news );
 			resultSet.close();
 			preparedStatement.close();
 		} catch ( SQLException e ) {

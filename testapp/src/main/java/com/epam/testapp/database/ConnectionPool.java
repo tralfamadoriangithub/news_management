@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class ConnectionPool {
+public final class ConnectionPool {
 
 	private static ConnectionProperties connectionProperties;
 	private static ArrayBlockingQueue<Connection> freeConnections;
@@ -23,7 +23,6 @@ public class ConnectionPool {
 
 	public static void initialize() throws ConnectionPoolTestappException {
 
-		System.out.println(connectionProperties);
 		try {
 			Class.forName(connectionProperties.getDriver());
 			freeConnections = new ArrayBlockingQueue<Connection>(

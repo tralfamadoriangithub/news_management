@@ -21,14 +21,14 @@ public class NewsForm extends ActionForm implements Serializable {
 	private String dateString;
 	private String localeName;
 	private List<News> newsList;
-	private String[] selectedNewsId;
+	private Integer[] selectedNewsId;
 
 	public NewsForm() {
 		news = new News();
 	}
 
 	public NewsForm( List<News> newsList, News news, Locale locale,
-			String dateString, String localeName, String[] selectedNewsId ) {
+			String dateString, String localeName, Integer[] selectedNewsId ) {
 		this.newsList = newsList;
 		this.news = news;
 		this.dateString = dateString;
@@ -68,11 +68,11 @@ public class NewsForm extends ActionForm implements Serializable {
 		newsList.add( news );
 	}
 
-	public String[] getSelectedNewsId() {
+	public Integer[] getSelectedNewsId() {
 		return selectedNewsId;
 	}
 
-	public void setSelectedNewsId( String[] selectedNewsId ) {
+	public void setSelectedNewsId( Integer[] selectedNewsId ) {
 		this.selectedNewsId = selectedNewsId;
 	}
 
@@ -118,8 +118,6 @@ public class NewsForm extends ActionForm implements Serializable {
 				actionErrors
 						.add( "date", new ActionMessage( "msg.date_format" ) );
 			}
-		} else {
-			System.out.println( "FUCKING NULL" );
 		}
 
 		return actionErrors;

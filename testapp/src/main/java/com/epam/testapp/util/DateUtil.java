@@ -49,4 +49,6 @@ public class DateUtil {
 		}
 		return false;
 	}
+	
+	private DateUtil(){}
 }

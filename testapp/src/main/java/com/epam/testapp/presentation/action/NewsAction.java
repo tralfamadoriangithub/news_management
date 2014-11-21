@@ -21,23 +21,28 @@ import com.epam.testapp.service.ServiceTestappException;
 
 public class NewsAction extends MappingDispatchAction {
 
-	private final Logger logger = Logger.getLogger( com.epam.testapp.presentation.action.NewsAction.class );
+	private final Logger logger = Logger
+			.getLogger( com.epam.testapp.presentation.action.NewsAction.class );
 	private INewsService newsService;
 
 	/**
 	 * Method forward to news_list_page.
 	 * 
-	 * @param mapping ActionMapping object for action
-	 * @param form ActionForm object for action
-	 * @param request HttpServletRequest request
-	 * @param response HttpServletResponse response
+	 * @param mapping
+	 *            ActionMapping object for action
+	 * @param form
+	 *            ActionForm object for action
+	 * @param request
+	 *            HttpServletRequest request
+	 * @param response
+	 *            HttpServletResponse response
 	 * @return ActionForward to news_list_page or error page if something wrong
-	 */	
+	 */
 	public ActionForward list( ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
-		
+
 		List<News> newsList = null;
 		try {
 			newsList = newsService.getNewsList();
@@ -57,11 +62,16 @@ public class NewsAction extends MappingDispatchAction {
 	/**
 	 * Method forward to add_edit_news_page.
 	 * 
-	 * @param mapping ActionMapping object for action
-	 * @param form ActionForm object for action
-	 * @param request HttpServletRequest request
-	 * @param response HttpServletResponse response
-	 * @return ActionForward to add_edit_news_page or error page if something wrong
+	 * @param mapping
+	 *            ActionMapping object for action
+	 * @param form
+	 *            ActionForm object for action
+	 * @param request
+	 *            HttpServletRequest request
+	 * @param response
+	 *            HttpServletResponse response
+	 * @return ActionForward to add_edit_news_page or error page if something
+	 *         wrong
 	 */
 	public ActionForward add( ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response ) {
@@ -77,25 +87,29 @@ public class NewsAction extends MappingDispatchAction {
 
 		return mapping.findForward( pageName );
 	}
-	
+
 	/**
 	 * Method forward to add_edit_news_page.
 	 * 
-	 * @param mapping ActionMapping object for action
-	 * @param form ActionForm object for action
-	 * @param request HttpServletRequest request
-	 * @param response HttpServletResponse response
-	 * @return ActionForward to add_edit_news_page or error page if something wrong
+	 * @param mapping
+	 *            ActionMapping object for action
+	 * @param form
+	 *            ActionForm object for action
+	 * @param request
+	 *            HttpServletRequest request
+	 * @param response
+	 *            HttpServletResponse response
+	 * @return ActionForward to add_edit_news_page or error page if something
+	 *         wrong
 	 */
 	public ActionForward edit( ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response ) {
-		
+
 		NewsForm newsForm = (NewsForm) form;
-		
+
 		News news = null;
 		try {
-			news = newsService
-					.getSelectedNews(newsForm.getNews().getId() );
+			news = newsService.getSelectedNews( newsForm.getNews().getId() );
 		} catch ( ServiceTestappException e ) {
 			logger.error( e.getMessage() );
 			return mapping.findForward( ProjectPages.ERROR_PAGE );
@@ -111,10 +125,14 @@ public class NewsAction extends MappingDispatchAction {
 	/**
 	 * Method save news and forward to view_news_page.
 	 * 
-	 * @param mapping ActionMapping object for action
-	 * @param form ActionForm object for action
-	 * @param request HttpServletRequest request
-	 * @param response HttpServletResponse response
+	 * @param mapping
+	 *            ActionMapping object for action
+	 * @param form
+	 *            ActionForm object for action
+	 * @param request
+	 *            HttpServletRequest request
+	 * @param response
+	 *            HttpServletResponse response
 	 * @return ActionForward to view_news_page or error page if something wrong
 	 */
 	public ActionForward save( ActionMapping mapping, ActionForm form,
@@ -137,10 +155,14 @@ public class NewsAction extends MappingDispatchAction {
 	/**
 	 * Method delete news and forward to news_list_page.
 	 * 
-	 * @param mapping ActionMapping object for action
-	 * @param form ActionForm object for action
-	 * @param request HttpServletRequest request
-	 * @param response HttpServletResponse response
+	 * @param mapping
+	 *            ActionMapping object for action
+	 * @param form
+	 *            ActionForm object for action
+	 * @param request
+	 *            HttpServletRequest request
+	 * @param response
+	 *            HttpServletResponse response
 	 * @return ActionForward to view_news_page or error page if something wrong
 	 */
 	public ActionForward delete( ActionMapping mapping, ActionForm form,
@@ -161,10 +183,14 @@ public class NewsAction extends MappingDispatchAction {
 	/**
 	 * Method forward to view_news_page.
 	 * 
-	 * @param mapping ActionMapping object for action
-	 * @param form ActionForm object for action
-	 * @param request HttpServletRequest request
-	 * @param response HttpServletResponse response
+	 * @param mapping
+	 *            ActionMapping object for action
+	 * @param form
+	 *            ActionForm object for action
+	 * @param request
+	 *            HttpServletRequest request
+	 * @param response
+	 *            HttpServletResponse response
 	 * @return ActionForward to view_news_page or error page if something wrong
 	 */
 	public ActionForward view( ActionMapping mapping, ActionForm form,
@@ -173,13 +199,12 @@ public class NewsAction extends MappingDispatchAction {
 		NewsForm newsForm = (NewsForm) form;
 		News news = null;
 		try {
-			news = newsService
-					.getSelectedNews( newsForm.getNews().getId() );
+			news = newsService.getSelectedNews( newsForm.getNews().getId() );
 		} catch ( ServiceTestappException e ) {
 			logger.error( e.getMessage() );
 			return mapping.findForward( ProjectPages.ERROR_PAGE );
 		}
-		
+
 		newsForm.setNews( news );
 
 		String pageName = ProjectPages.VIEW_NEWS_PAGE;
@@ -192,24 +217,29 @@ public class NewsAction extends MappingDispatchAction {
 	/**
 	 * Method cancels current operation and forward to previous page.
 	 * 
-	 * @param mapping ActionMapping object for action
-	 * @param form ActionForm object for action
-	 * @param request HttpServletRequest request
-	 * @param response HttpServletResponse response
+	 * @param mapping
+	 *            ActionMapping object for action
+	 * @param form
+	 *            ActionForm object for action
+	 * @param request
+	 *            HttpServletRequest request
+	 * @param response
+	 *            HttpServletResponse response
 	 * @return ActionForward to previous page or error page if something wrong
 	 */
 	public ActionForward cancel( ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response ) {
-		NewsForm newsForm = (NewsForm)form;
-		if( newsForm.getNews().getId() != 0){
+		NewsForm newsForm = (NewsForm) form;
+		if ( newsForm.getNews().getId() != 0 ) {
 			try {
-				News news = newsService.getSelectedNews( newsForm.getNews().getId() );
+				News news = newsService.getSelectedNews( newsForm.getNews()
+						.getId() );
 				newsForm.setNews( news );
 			} catch ( ServiceTestappException e ) {
 				logger.error( e.getMessage() );
 				return mapping.findForward( ProjectPages.ERROR_PAGE );
 			}
-		}	
+		}
 		String pageName = newsService.getPreviousPage( request );
 		newsService.setCurrentPage( request, pageName );
 		return mapping.findForward( pageName );
@@ -218,15 +248,19 @@ public class NewsAction extends MappingDispatchAction {
 	/**
 	 * Method changes locale and forward to current page.
 	 * 
-	 * @param mapping ActionMapping object for action
-	 * @param form ActionForm object for action
-	 * @param request HttpServletRequest request
-	 * @param response HttpServletResponse response
+	 * @param mapping
+	 *            ActionMapping object for action
+	 * @param form
+	 *            ActionForm object for action
+	 * @param request
+	 *            HttpServletRequest request
+	 * @param response
+	 *            HttpServletResponse response
 	 * @return ActionForward to current or error page if something wrong
 	 */
 	public ActionForward changeLocale( ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response ) {
-		
+
 		NewsForm newsForm = (NewsForm) form;
 		Locale locale = newsService.changeLocale( newsForm.getLocaleName(),
 				request );

@@ -23,6 +23,6 @@
 		name="/List, /Add, /Save, /Delete, /View, /Edit, /ChangeLocale, /Cancel"
 		class="com.epam.testapp.presentation.action.NewsAction" autowire="byName" />
 
-	<context:property-placeholder location="/WEB-INF/database.properties" />
+	<!-- <context:property-placeholder location="/WEB-INF/database.properties" /> -->
 
 </beans>
