@@ -11,15 +11,8 @@
 <script src="<c:url value='/js/messages.jsp'/>" type="text/javascript"></script>
 <script src="<c:url value='/js/script.js'/>" type="text/javascript"></script>
 
-<!--[if !IE]>-->
 <link href="<c:url value='/css/style.css'/>" rel="stylesheet"
 	type="text/css" />
-<!--<![endif]-->
-
-<!--[if gte IE9]>
-	<link href="<c:url value='/css/style.css'/>" rel="stylesheet"
-	type="text/css" />
-<![endif]-->
 
 <title><tiles:getAsString name="title" /></title>
 </head>

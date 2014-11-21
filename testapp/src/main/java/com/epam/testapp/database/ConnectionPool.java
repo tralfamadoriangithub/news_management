@@ -18,7 +18,7 @@ public class ConnectionPool {
 
 	public void setConnectionProperties(
 			ConnectionProperties connectionProperties) {
-		this.connectionProperties = connectionProperties;
+		ConnectionPool.connectionProperties = connectionProperties;
 	}
 
 	public static void initialize() throws ConnectionPoolTestappException {
@@ -44,7 +44,6 @@ public class ConnectionPool {
 					throw new ConnectionPoolTestappException( "Connection pool init exception", e );
 				}
 			}
-
 		} catch (ClassNotFoundException e) {
 			throw new ConnectionPoolTestappException( "Connection pool init exception", e );
 		}
