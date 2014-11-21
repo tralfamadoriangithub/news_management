@@ -118,7 +118,9 @@ public class NewsDao implements INewsDao {
 	public News fetchById( int id ) throws DaoTestappException {
 
 		Connection connection = null;
-		News news = new News();
+		News news = null;
+
+		System.out.println( "News ID " + id );
 
 		try {
 			connection = connectionPool.getConnection();
@@ -126,7 +128,10 @@ public class NewsDao implements INewsDao {
 					.prepareStatement( "SELECT * FROM news WHERE news_id = ?" );
 			preparedStatement.setInt( 1, id );
 			ResultSet resultSet = preparedStatement.executeQuery();
-			news = getNewsFromResutSet( resultSet );
+			if ( resultSet.next() ) {
+				news = getNewsFromResutSet( resultSet );
+			}
+			System.out.println( news );
 			resultSet.close();
 			preparedStatement.close();
 		} catch ( SQLException e ) {

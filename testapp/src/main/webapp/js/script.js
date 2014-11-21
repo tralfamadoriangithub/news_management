@@ -3,10 +3,9 @@ function confirmDelete(){
 	for( var i = 0; i < selected.length; i++){
 		if(selected[i].checked){
 			return confirmDialog();
-		}else{
-			alert(nothingSelectedMessage);
 		}
 	}
+	alert(nothingSelectedMessage);
 	return false;
 }
 
@@ -18,7 +17,7 @@ function verifyForm( form ){
 	var field;
 	var fieldName;
 	var fieldValue;
-	var errors[];
+	var errors = [];
 	for ( var i = 0; i < form.elements.length; i++) {
 		field = form.elements[i];
 		fieldName = field.nodeName.toLowerCase();
@@ -31,14 +30,14 @@ function verifyForm( form ){
 					errors.push(title_length);
 				}
 			}
-		/*	if (field.name == "dateString") {
+		if (field.name == "dateString") {
 				var expr = new RegExp(datePattern);
 				if(fieldValue == "") {
 					errors.push(date_required);
 				}  else if (!(fieldValue.match(expr))) {
 					errors.push(date_format);
 				}
-			}*/
+			}
 		} else if (fieldName == "textarea") {
 			if (field.name == "news.brief") {
 				if (fieldValue == "") {

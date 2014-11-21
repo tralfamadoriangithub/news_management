@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 
-<c:choose>
+<%-- <c:choose>
 	<c:when test="${ not empty sessionScope.language }">
 		<c:set var="language" value="${ sessionScope.language }" />
 	</c:when>
@@ -17,52 +17,70 @@
 <fmt:setLocale value="${ language }" />
 <fmt:setBundle
 	basename="com.epam.testapp.properties.ApplicationResources"
-	var="bundle" />
+	var="bundle" /> --%>
 
-<article class="view_news">
+<section class="headLink">
+	<html:link action="/List">
+		<bean:message key="label.news" />
+	</html:link>
+	&gt;&gt;
+	<bean:message key="label.news_view" />
+</section>
 
-	<header class="news_header">
-		<section class="news_title">
-			<label><bean:message key="label.news_title" /></label>
-			<c:out value="${ newsForm.news.title }" />
-		</section>
+<section id="viewNewsSection">
 
-		<section class="news_date">
-			<label><bean:message key="label.news_date" /></label>
-			<fmt:message bundle="${ bundle }" key="format.date" var="format" />
-			<fmt:formatDate value="${ newsForm.news.date }"
-				pattern="${ format }" />
-		</section>
-
-	</header>
-
-	<setion class="news_body">
-	<section class="news_brief">
+	<bean:define id="newsItem" name="newsForm" property="news" />
+	<p>
+		<label><bean:message key="label.news_title" /></label>
+		<div class="content">
+			<bean:write name="newsItem" property="title"/>
+		</div>
+	<p>
+		<label><bean:message key="label.news_date" /></label>
+		<div class="content">
+			<%-- <fmt:message bundle="${ bundle }" key="format.date" var="format" /> --%>
+			<%-- <fmt:formatDate value="${ newsForm.news.date }" pattern="${ format }" /> --%>
+			<bean:write name="newsItem" property="date" formatKey="format.date"/>
+		</div>
+	<p>
 		<label><bean:message key="label.brief" /></label>
-		<c:out value="${ newsForm.news.brief }" />
-	</section>
-	<section class="news_content">
+		<div class="content">
+			<bean:write name="newsItem" property="brief"/>
+		</div>
+	<p>
 		<label><bean:message key="label.content" /></label>
-		<c:out value="${ newsForm.news.content }" />
-	</section>
-	</setion>
+		<div class="content">
+			<bean:write name="newsItem" property="content"/>
+		</div>
 
-	<footer class="news_footer">
+		<section id="viewNewsButtons">
+			
+			<%-- <html:form action="/Delete">
+				<html:hidden property="id" name="newsItem" />
+				<html:submit>
+					<bean:message key="button.delete" />
+				</html:submit>
+			</html:form> --%>
+			
+			<form action="/testapp/Delete.do" method="post"
+				onsubmit="return confirmDialog();">
+				<input type="hidden" name="selectedNewsId"
+					value="<c:out value='${ newsForm.news.id }' />"> <input
+					type="submit" value="<bean:message key="button.delete" />">
+			</form>
+			
+			<html:form action="/Edit">
+				<html:hidden property="id" name="newsItem" />
+				<html:submit>
+					<bean:message key="button.edit" />
+				</html:submit>
+			</html:form>
+			
 
-		<%-- <bean:define id="news" name="newsForm" property="news"/> --%>
-
-		<form action="/testapp/Delete.do" method="post" onsubmit="return confirmDialog();">
-		
-			<input type="hidden" name="selectedNewsId"
-				value="<c:out value='${ newsForm.news.id }' />">
-				 <input type="submit" value="<bean:message key="button.delete" />">
-		</form>
-
-		<form action="/testapp/Edit.do" method="post">
-			<input type="hidden" name="newsId"
-				value="<c:out value='${ newsForm.news.id }' />"> <input
-				type="submit" value="<bean:message key="button.edit" />">
-		</form>
-
-	</footer>
-</article>
+			<%-- <form action="/testapp/Edit.do" method="post">
+				<input type="hidden" name="newsId"
+					value="<c:out value='${ newsForm.news.id }' />"> <input
+					type="submit" value="<bean:message key="button.edit" />">
+			</form> --%>
+		</section>
+</section>

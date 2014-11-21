@@ -26,6 +26,7 @@ public class NewsForm extends ActionForm implements Serializable {
 	private String[] selectedNewsId;
 
 	public NewsForm() {
+		news = new News();
 	}
 
 	public NewsForm( List<News> newsList, News news, Locale locale,

@@ -1,4 +1,4 @@
-package com.epam.testapp.service.impl;
+package com.epam.testapp.service;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,13 +14,13 @@ import com.epam.testapp.entity.News;
 import com.epam.testapp.service.AttributeName;
 import com.epam.testapp.service.INewsService;
 import com.epam.testapp.service.ServiceTestappException;
-import com.epam.testapp.service.UIHelper;
 import com.epam.testapp.util.DateUtil;
 
 public class NewsServiceImpl implements INewsService {
 
 	private INewsDao newsDao;
-
+	
+	
 	@Override
 	public List<News> getNewsList() throws ServiceTestappException {
 
@@ -30,7 +30,6 @@ public class NewsServiceImpl implements INewsService {
 		} catch ( DaoTestappException e ) {
 			throw new ServiceTestappException( e.getMessage(), e );
 		}
-
 		return newsList;
 	}
 
@@ -52,7 +51,7 @@ public class NewsServiceImpl implements INewsService {
 	}
 
 	@Override
-	public List<News> removeNews( String[] stringNewsId, List<News> newsList ) throws ServiceTestappException {
+	public void removeNews( String[] stringNewsId  ) throws ServiceTestappException {
 
 		List<News> updatedList = null;
 
@@ -68,16 +67,18 @@ public class NewsServiceImpl implements INewsService {
 			} catch ( DaoTestappException e ) {
 				throw new ServiceTestappException( e.getMessage(), e );
 			}
-			updatedList = UIHelper.removeNewsFromList( newsList, intNewsId );
 		}
-		return updatedList;
 	}
 
 	@Override
-	public News getSelectedNews( List<News> newsList, int newsId ) {
+	public News getSelectedNews( int newsId  ) throws ServiceTestappException {
 
-		News selectedNews = UIHelper.getNewsById( newsList, newsId );
-
+		News selectedNews;
+		try {
+			selectedNews = newsDao.fetchById( newsId );
+		} catch ( DaoTestappException e ) {
+			throw new ServiceTestappException( e.getMessage(), e );
+		}
 		return selectedNews;
 	}
 

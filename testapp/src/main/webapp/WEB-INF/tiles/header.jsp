@@ -12,7 +12,7 @@
 <section id="language_selection">
 	<html:link action="ChangeLocale?localeName=en">
 		<bean:message key="label.english" />
-	</html:link>
+	</html:link>&nbsp;&nbsp;
 	<html:link action="ChangeLocale?localeName=ru">
 		<bean:message key="label.russian" />
 	</html:link>

@@ -12,6 +12,16 @@ public class News implements Serializable {
 	private Date date;
 	private String brief;
 	private String content;
+	
+	public News(){}
+	
+	public News( int id, String title, Date date, String brief, String content ) {
+		this.id = id;
+		this.title = title;
+		this.date = date;
+		this.brief = brief;
+		this.content = content;
+	}
 
 	public int getId() {
 		return id;

@@ -16,7 +16,7 @@
 	<bean id="newsDao" class="com.epam.testapp.database.NewsDao"
 		autowire="byName" />
 
-	<bean id="newsService" class="com.epam.testapp.service.impl.NewsServiceImpl"
+	<bean id="newsService" class="com.epam.testapp.service.NewsServiceImpl"
 		autowire="byName" />
 
 	<bean id="newsAction"
