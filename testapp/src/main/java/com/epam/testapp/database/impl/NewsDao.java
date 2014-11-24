@@ -1,4 +1,4 @@
-package com.epam.testapp.database;
+package com.epam.testapp.database.impl;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.epam.testapp.database.ConnectionPool;
+import com.epam.testapp.database.ConnectionPoolTestappException;
+import com.epam.testapp.database.DaoTestappException;
+import com.epam.testapp.database.INewsDao;
 import com.epam.testapp.entity.News;
 
 public class NewsDao implements INewsDao {

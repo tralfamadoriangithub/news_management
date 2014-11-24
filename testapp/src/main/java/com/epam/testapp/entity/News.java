@@ -3,14 +3,41 @@ package com.epam.testapp.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name="NEWS")
+@NamedQuery(name="News.getNewsList", query="SELECT n FROM News n ORDER BY NEWS_DATE DESC")
 public class News implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
+	@Column(name = "NEWS_ID")
+	@SequenceGenerator( name="id_seq", sequenceName="TEST_ID_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_seq")
 	private int id;
+	
+	@Column(name="NEWS_TITLE")
 	private String title;
+	
+	@Column(name="NEWS_DATE")
+	@Temporal(TemporalType.DATE)
 	private Date date;
+	
+	@Column(name="NEWS_BRIEF")
 	private String brief;
+	
+	@Column(name="NEWS_CONTENT")
 	private String content;
 	
 	public News(){}

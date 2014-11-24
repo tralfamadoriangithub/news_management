@@ -13,9 +13,13 @@
 	<bean id="connectionPool" class="com.epam.testapp.database.ConnectionPool"
 		init-method="initialize" autowire="byName" />
 
-	<bean id="newsDao" class="com.epam.testapp.database.NewsDao"
-		autowire="byName" />
-
+	<!-- <bean id="newsDao" class="com.epam.testapp.database.impl.NewsDao"
+		autowire="byName" /> -->
+		
+	<!-- <bean id="newsDao" class="com.epam.testapp.database.impl.JpaNewsDao" /> -->
+	
+	<bean id="newsDao" class="com.epam.testapp.database.impl.HibernateNewsDao"/>
+	
 	<bean id="newsService" class="com.epam.testapp.service.NewsServiceImpl"
 		autowire="byName" />
 
