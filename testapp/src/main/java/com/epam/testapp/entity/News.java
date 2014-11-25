@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -16,7 +17,11 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="NEWS")
-@NamedQuery(name="News.getNewsList", query="SELECT n FROM News n ORDER BY NEWS_DATE DESC")
+@NamedQueries({
+	@NamedQuery(name="News.getNewsList", query="SELECT n FROM News n ORDER BY n.date DESC"),
+	@NamedQuery(name="News.deleteNews", query="DELETE n FROM News n WHERE n.id IN (:id)")
+})
+
 public class News implements Serializable {
 
 	private static final long serialVersionUID = 1L;

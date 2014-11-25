@@ -8,25 +8,56 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<bean id="connectionProperties" class="com.epam.testapp.database.ConnectionProperties" />
+	<!-- CONNECTION PROPERTIES -->
 
-	<bean id="connectionPool" class="com.epam.testapp.database.ConnectionPool"
+	<bean id="connectionProperties"
+		class="com.epam.testapp.database.connection.ConnectionProperties" />
+
+	<!-- CONNECTION POOL -->
+
+	<bean id="connectionPool" class="com.epam.testapp.database.connection.ConnectionPool"
 		init-method="initialize" autowire="byName" />
 
-	<!-- <bean id="newsDao" class="com.epam.testapp.database.impl.NewsDao"
-		autowire="byName" /> -->
-		
-	<!-- <bean id="newsDao" class="com.epam.testapp.database.impl.JpaNewsDao" /> -->
-	
-	<bean id="newsDao" class="com.epam.testapp.database.impl.HibernateNewsDao"/>
-	
+	<!-- CUSTOM DAO -->
+
+	<!-- <bean id="newsDao" class="com.epam.testapp.database.impl.NewsDao" autowire="byName" 
+		/> -->
+
+	<!-- JPA -->
+
+	<!-- <bean id="persistenceBean" class="javax.persistence.Persistence" /> 
+		<bean id="newsDao" class="com.epam.testapp.database.impl.JpaNewsDao"> <property 
+		name="entityManagerFactory"> <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> 
+		<property name="targetObject"> <ref bean="persistenceBean" /> </property> 
+		<property name="targetMethod"> <value>createEntityManagerFactory</value> 
+		</property> <property name="arguments"> <list> <value>NEWS_PERSISTENCE</value> 
+		</list> </property> </bean> </property> </bean> -->
+
+	<!-- HIBERNATE -->
+
+	<bean id="configuration" class="org.hibernate.cfg.Configuration" />
+
+	<bean id="hibernateConfiguration" class="org.hibernate.cfg.Configuration"
+		factory-bean="configuration" factory-method="configure" />
+
+	<bean id="newsDao" class="com.epam.testapp.database.impl.HibernateNewsDao">
+		<property name="sessionFactory">
+			<bean factory-bean="hibernateConfiguration" factory-method="buildSessionFactory" />
+		</property>
+	</bean>
+
+	<!-- News Service -->
+
 	<bean id="newsService" class="com.epam.testapp.service.NewsServiceImpl"
 		autowire="byName" />
+
+	<!-- News Action -->
 
 	<bean id="newsAction"
 		name="/List, /Add, /Save, /Delete, /View, /Edit, /ChangeLocale, /Cancel"
 		class="com.epam.testapp.presentation.action.NewsAction" autowire="byName" />
 
-	<!-- <context:property-placeholder location="/WEB-INF/database.properties" /> -->
+	<!-- <context:property-placeholder location="/WEB-INF/database.properties" 
+		/> -->
 
 </beans>

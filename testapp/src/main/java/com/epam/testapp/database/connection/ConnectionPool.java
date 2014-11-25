@@ -1,4 +1,4 @@
-package com.epam.testapp.database;
+package com.epam.testapp.database.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

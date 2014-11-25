@@ -1,4 +1,4 @@
-package com.epam.testapp.database;
+package com.epam.testapp.database.connection;
 
 import com.epam.testapp.exception.TestappException;
 

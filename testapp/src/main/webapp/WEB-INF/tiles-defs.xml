@@ -12,22 +12,22 @@
 	</definition>
 
 	<definition name="news_list.page" extends="layout.page">
-		<put name="title" value="News List" />
+		<put name="title" value="label.news_list" />
 		<put name="page_content" value="/WEB-INF/tiles/news_list_page.jsp" />
 	</definition>
 
 	<definition name="add_edit_news.page" extends="layout.page">
-		<put name="title" value="Create News" />
+		<put name="title" value="label.add_news" />
 		<put name="page_content" value="/WEB-INF/tiles/add_edit_news.jsp" />
 	</definition>
 	
 	<definition name="view_news.page" extends="layout.page">
-		<put name="title" value="View News"/>
+		<put name="title" value="label.news_view"/>
 		<put name="page_content" value="/WEB-INF/tiles/view_news_page.jsp"/>
 	</definition>
 	
 	<definition name="error.page" extends="layout.page">
-		<put name="title" value="Error"/>
+		<put name="title" value="label.error"/>
 		<put name="page_content" value="/WEB-INF/tiles/error_page.jsp"/>
 	</definition>
 </tiles-definitions>

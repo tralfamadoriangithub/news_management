@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt"%>
 
@@ -14,10 +15,28 @@
 <link href="<c:url value='/css/style.css'/>" rel="stylesheet"
 	type="text/css" />
 
-<title><tiles:getAsString name="title" /></title>
+<c:choose>
+	<c:when test="${ not empty sessionScope.language }">
+		<c:set var="language" value="${ sessionScope.language }" />
+	</c:when>
+	<c:otherwise>
+		<c:set var="language" value="${ pageContext.request.locale }" />
+	</c:otherwise>
+</c:choose>
+<fmt:setLocale value="${ language }" />
+<fmt:setBundle
+	basename="com.epam.testapp.properties.ApplicationResources"
+	var="bundle" />
+
+<c:set var="pageTitle" scope="page">	
+	<tiles:getAsString name="title" />
+</c:set>
+
+<title><fmt:message key="${ pageTitle }" bundle="${ bundle }"/></title>
 </head>
 
 <body>
+
 	<section id="main_wrapper">
 		<section id="inner_wrapper">
 			<header id="header">

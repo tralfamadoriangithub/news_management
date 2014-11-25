@@ -9,6 +9,7 @@
 		<property name="hibernate.connection.username">testapp</property>
 		<property name="hibernate.connection.password">oracle</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
-		<mapping class="com.epam.testapp.entity.News"/>
+		<mapping resource="com/epam/testapp/news.hdm.xml"/>
+		<!-- <mapping class="com.epam.testapp.entity.News"/> -->
 	</session-factory>
 </hibernate-configuration>
