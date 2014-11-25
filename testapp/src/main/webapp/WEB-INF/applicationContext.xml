@@ -26,6 +26,7 @@
 	<!-- JPA -->
 
 	<bean id="persistenceBean" class="javax.persistence.Persistence" />
+	
 	<bean id="newsDao" class="com.epam.testapp.database.impl.JpaNewsDao">
 		<property name="entityManagerFactory">
 			<bean
