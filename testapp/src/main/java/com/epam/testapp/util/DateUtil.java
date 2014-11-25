@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 public class DateUtil {
 	
+	private DateUtil(){}
+	
 	public static String getStringFromDate(Date date, Locale locale){
 		
 		ResourceBundle bundle = ResourceBundle.getBundle("com.epam.testapp.properties.ApplicationResources", locale);
@@ -49,6 +51,4 @@ public class DateUtil {
 		}
 		return false;
 	}
-	
-	private DateUtil(){}
 }

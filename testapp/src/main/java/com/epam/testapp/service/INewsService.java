@@ -83,5 +83,9 @@ public interface INewsService {
 	public void setPreviousPage( HttpServletRequest request, String pageName );
 
 	public String getPreviousPage( HttpServletRequest request );
+	
+	public void setPreviousNewsId( HttpServletRequest request, int newsId );
+	
+	public int getPreviousNewsId( HttpServletRequest request );
 
 }

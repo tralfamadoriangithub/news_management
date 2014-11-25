@@ -119,4 +119,16 @@ public class NewsServiceImpl implements INewsService {
 				AttributeName.PREVIOUS_PAGE );
 	}
 
+	@Override
+	public void setPreviousNewsId( HttpServletRequest request, int newsId ) {
+		HttpSession session = request.getSession();
+		session.setAttribute( "prevNewsId", newsId );
+	}
+
+	@Override
+	public int getPreviousNewsId( HttpServletRequest request ) {
+		return (int) request.getSession().getAttribute(
+				"prevNewsId" );
+	}
+
 }
