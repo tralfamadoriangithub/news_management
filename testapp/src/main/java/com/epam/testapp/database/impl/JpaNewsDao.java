@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import com.epam.testapp.database.DaoTestappException;
@@ -39,13 +40,18 @@ public class JpaNewsDao implements INewsDao {
 	public News save( News news ) throws DaoTestappException {
 
 		EntityManager em = null;
+		EntityTransaction transaction = null;
 		News addedNews = null;
 		try {
 			em = entityManagerFactory.createEntityManager();
-			em.getTransaction().begin();
+			transaction = em.getTransaction();
+			transaction.begin();
 			addedNews = em.merge( news );
-			em.getTransaction().commit();
+			transaction.commit();
 		} catch ( Exception e ) {
+			if ( transaction != null ) {
+				transaction.rollback();
+			}
 			throw new DaoTestappException( "NewsDao exception in save method",
 					e );
 		} finally {
@@ -60,16 +66,19 @@ public class JpaNewsDao implements INewsDao {
 	public void remove( List<Integer> newsId ) throws DaoTestappException {
 
 		EntityManager em = null;
+		EntityTransaction transaction = null;
 		try {
 			em = entityManagerFactory.createEntityManager();
-			em.getTransaction().begin();
-			News news;
-			for ( Integer id : newsId ) {
-				news = em.find( News.class, id );
-				em.remove( news );
-			}
-			em.getTransaction().commit();
+			transaction = em.getTransaction();
+			transaction.begin();
+			Query query = em.createNamedQuery( "News.deleteNews" );
+			query.setParameter( "id", newsId );
+			query.executeUpdate();
+			transaction.commit();
 		} catch ( Exception e ) {
+			if ( transaction != null ) {
+				transaction.rollback();
+			}
 			throw new DaoTestappException(
 					"NewsDao exception in remove method", e );
 		} finally {

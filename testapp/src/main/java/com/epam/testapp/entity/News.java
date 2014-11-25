@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Table(name="NEWS")
 @NamedQueries({
 	@NamedQuery(name="News.getNewsList", query="SELECT n FROM News n ORDER BY n.date DESC"),
-	@NamedQuery(name="News.deleteNews", query="DELETE n FROM News n WHERE n.id IN (:id)")
+	@NamedQuery(name="News.deleteNews", query="DELETE FROM News n WHERE n.id IN :id")
 })
 
 public class News implements Serializable {

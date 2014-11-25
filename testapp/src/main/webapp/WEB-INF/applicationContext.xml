@@ -25,26 +25,34 @@
 
 	<!-- JPA -->
 
-	<!-- <bean id="persistenceBean" class="javax.persistence.Persistence" /> 
-		<bean id="newsDao" class="com.epam.testapp.database.impl.JpaNewsDao"> <property 
-		name="entityManagerFactory"> <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> 
-		<property name="targetObject"> <ref bean="persistenceBean" /> </property> 
-		<property name="targetMethod"> <value>createEntityManagerFactory</value> 
-		</property> <property name="arguments"> <list> <value>NEWS_PERSISTENCE</value> 
-		</list> </property> </bean> </property> </bean> -->
+	<bean id="persistenceBean" class="javax.persistence.Persistence" />
+	<bean id="newsDao" class="com.epam.testapp.database.impl.JpaNewsDao">
+		<property name="entityManagerFactory">
+			<bean
+				class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+				<property name="targetObject">
+					<ref bean="persistenceBean" />
+				</property>
+				<property name="targetMethod">
+					<value>createEntityManagerFactory</value>
+				</property>
+				<property name="arguments">
+					<list>
+						<value>NEWS_PERSISTENCE</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
 
 	<!-- HIBERNATE -->
 
-	<bean id="configuration" class="org.hibernate.cfg.Configuration" />
-
-	<bean id="hibernateConfiguration" class="org.hibernate.cfg.Configuration"
-		factory-bean="configuration" factory-method="configure" />
-
-	<bean id="newsDao" class="com.epam.testapp.database.impl.HibernateNewsDao">
-		<property name="sessionFactory">
-			<bean factory-bean="hibernateConfiguration" factory-method="buildSessionFactory" />
-		</property>
-	</bean>
+	<!-- <bean id="configuration" class="org.hibernate.cfg.Configuration" /> 
+		<bean id="hibernateConfiguration" class="org.hibernate.cfg.Configuration" 
+		factory-bean="configuration" factory-method="configure" /> <bean id="newsDao" 
+		class="com.epam.testapp.database.impl.HibernateNewsDao"> <property name="sessionFactory"> 
+		<bean factory-bean="hibernateConfiguration" factory-method="buildSessionFactory" 
+		/> </property> </bean> -->
 
 	<!-- News Service -->
 

@@ -27,7 +27,6 @@ public class HibernateNewsDao implements INewsDao {
 			Query query = session.getNamedQuery( "getNewsList" );
 			newsList = query.list();
 		} catch ( HibernateException e ) {
-			System.out.println(e.getMessage());
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in getList method", e );
 		} finally {
@@ -42,13 +41,17 @@ public class HibernateNewsDao implements INewsDao {
 	public News save( News news ) throws DaoTestappException {
 
 		Session session = null;
+		Transaction transaction = null;
 		News addedNews = null;
 		try {
 			session = sessionFactory.openSession();
-			session.beginTransaction();
+			transaction = session.beginTransaction();
 			addedNews = (News) session.merge( news );
-			session.getTransaction().commit();
+			transaction.commit();
 		} catch ( HibernateException e ) {
+			if ( transaction != null ) {
+				transaction.rollback();
+			}
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in save method", e );
 		} finally {
@@ -63,14 +66,18 @@ public class HibernateNewsDao implements INewsDao {
 	public void remove( List<Integer> newsId ) throws DaoTestappException {
 
 		Session session = null;
+		Transaction transaction = null;
 		try {
 			session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
+			transaction = session.beginTransaction();
 			Query q = session.getNamedQuery( "deleteNews" );
 			q.setParameterList( "id", newsId );
 			q.executeUpdate();
 			transaction.commit();
 		} catch ( HibernateException e ) {
+			if ( transaction != null ) {
+				transaction.rollback();
+			}
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in remove method", e );
 		} finally {
