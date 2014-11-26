@@ -15,25 +15,25 @@ import com.epam.testapp.entity.News;
 public class HibernateNewsDao implements INewsDao {
 
 	private SessionFactory sessionFactory;
-
+	
 	@SuppressWarnings( "unchecked" )
 	@Override
 	public List<News> getList() throws DaoTestappException {
 
 		Session session = null;
+		Transaction transaction = null;
 		List<News> newsList = null;
 		try {
-			session = sessionFactory.openSession();
+			session = sessionFactory.getCurrentSession();
+			transaction = session.beginTransaction();
 			Query query = session.getNamedQuery( "getNewsList" );
 			newsList = query.list();
+			transaction.commit();
 		} catch ( HibernateException e ) {
+			e.printStackTrace();
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in getList method", e );
-		} finally {
-			if ( session != null ) {
-				session.close();
-			}
-		}
+		} 
 		return newsList;
 	}
 
@@ -44,7 +44,7 @@ public class HibernateNewsDao implements INewsDao {
 		Transaction transaction = null;
 		News addedNews = null;
 		try {
-			session = sessionFactory.openSession();
+			session = sessionFactory.getCurrentSession();
 			transaction = session.beginTransaction();
 			addedNews = (News) session.merge( news );
 			transaction.commit();
@@ -52,13 +52,10 @@ public class HibernateNewsDao implements INewsDao {
 			if ( transaction != null ) {
 				transaction.rollback();
 			}
+			e.printStackTrace();
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in save method", e );
-		} finally {
-			if ( session != null ) {
-				session.close();
-			}
-		}
+		} 
 		return addedNews;
 	}
 
@@ -68,7 +65,7 @@ public class HibernateNewsDao implements INewsDao {
 		Session session = null;
 		Transaction transaction = null;
 		try {
-			session = sessionFactory.openSession();
+			session = sessionFactory.getCurrentSession();
 			transaction = session.beginTransaction();
 			Query q = session.getNamedQuery( "deleteNews" );
 			q.setParameterList( "id", newsId );
@@ -78,12 +75,9 @@ public class HibernateNewsDao implements INewsDao {
 			if ( transaction != null ) {
 				transaction.rollback();
 			}
+			e.printStackTrace();
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in remove method", e );
-		} finally {
-			if ( session != null ) {
-				session.close();
-			}
 		}
 	}
 
@@ -91,20 +85,19 @@ public class HibernateNewsDao implements INewsDao {
 	public News fetchById( int id ) throws DaoTestappException {
 
 		Session session = null;
+		Transaction transaction = null;
 		News news = null;
 		try {
-			session = sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
+			session = sessionFactory.getCurrentSession();
+			transaction = session.beginTransaction();
 			news = (News) session.get( News.class, id );
+			//news = (News) session.load( News.class, id );
 			transaction.commit();
 		} catch ( HibernateException e ) {
+			e.printStackTrace();
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in fetchById method", e );
-		} finally {
-			if ( session != null ) {
-				session.close();
-			}
-		}
+		} 
 		return news;
 	}
 

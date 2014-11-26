@@ -53,9 +53,9 @@ public class NewsAction extends MappingDispatchAction {
 		newsForm.setNewsList( newsList );
 
 		String pageName = ProjectPages.NEWS_LIST_PAGE;
+		
 		newsService.setCurrentPage( request, pageName );
 		newsService.setPreviousPage( request, pageName );
-
 		return mapping.findForward( pageName );
 	}
 
@@ -77,7 +77,7 @@ public class NewsAction extends MappingDispatchAction {
 			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
-		if(newsForm.getNews() != null){
+		if ( newsForm.getNews() != null ) {
 			newsService.setPreviousNewsId( request, newsForm.getNews().getId() );
 		}
 		News news = new News();
@@ -86,8 +86,8 @@ public class NewsAction extends MappingDispatchAction {
 		newsForm.setNews( news );
 
 		String pageName = ProjectPages.ADD_NEWS_PAGE;
+		
 		newsService.setCurrentPage( request, pageName );
-
 		return mapping.findForward( pageName );
 	}
 
@@ -109,8 +109,8 @@ public class NewsAction extends MappingDispatchAction {
 			HttpServletRequest request, HttpServletResponse response ) {
 
 		NewsForm newsForm = (NewsForm) form;
-
 		News news = null;
+		
 		try {
 			news = newsService.getSelectedNews( newsForm.getNews().getId() );
 		} catch ( ServiceTestappException e ) {
@@ -120,7 +120,9 @@ public class NewsAction extends MappingDispatchAction {
 		newsForm.setNews( news );
 
 		String pageName = ProjectPages.ADD_NEWS_PAGE;
+		
 		newsService.setCurrentPage( request, pageName );
+		newsService.setPreviousPage( request, pageName );
 		newsService.setPreviousNewsId( request, news.getId() );
 		return mapping.findForward( pageName );
 	}
@@ -152,6 +154,7 @@ public class NewsAction extends MappingDispatchAction {
 			return mapping.findForward( ProjectPages.ERROR_PAGE );
 		}
 		newsForm.setNews( newNews );
+		
 		return mapping.findForward( ProjectPages.VIEW_NEWS_PAGE );
 	}
 
@@ -211,6 +214,7 @@ public class NewsAction extends MappingDispatchAction {
 		newsForm.setNews( news );
 
 		String pageName = ProjectPages.VIEW_NEWS_PAGE;
+		
 		newsService.setCurrentPage( request, pageName );
 		newsService.setPreviousPage( request, pageName );
 		newsService.setPreviousNewsId( request, news.getId() );
@@ -232,17 +236,18 @@ public class NewsAction extends MappingDispatchAction {
 	 */
 	public ActionForward cancel( ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response ) {
+		
 		NewsForm newsForm = (NewsForm) form;
-		//if ( newsForm.getNews().getId() == 0 ) {
-			try {
-				News news = newsService.getSelectedNews( newsService.getPreviousNewsId( request ) );
-				newsForm.setNews( news );
-			} catch ( ServiceTestappException e ) {
-				logger.error( e.getMessage() );
-				return mapping.findForward( ProjectPages.ERROR_PAGE );
-			}
-		//}
+		try {
+			News news = newsService.getSelectedNews( newsService
+					.getPreviousNewsId( request ) );
+			newsForm.setNews( news );
+		} catch ( ServiceTestappException e ) {
+			logger.error( e.getMessage() );
+			return mapping.findForward( ProjectPages.ERROR_PAGE );
+		}
 		String pageName = newsService.getPreviousPage( request );
+		
 		newsService.setCurrentPage( request, pageName );
 		return mapping.findForward( pageName );
 	}
@@ -268,10 +273,6 @@ public class NewsAction extends MappingDispatchAction {
 				request );
 		setLocale( request, locale );
 		return mapping.findForward( newsService.getCurrentPage( request ) );
-	}
-
-	public INewsService getNewsService() {
-		return newsService;
 	}
 
 	public void setNewsService( INewsService newsService ) {
