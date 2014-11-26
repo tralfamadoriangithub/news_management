@@ -30,4 +30,5 @@
 	<query name="deleteNews">
 			<![CDATA[DELETE News n WHERE n.id IN (:id)]]>
 	</query>
+	
 </hibernate-mapping>

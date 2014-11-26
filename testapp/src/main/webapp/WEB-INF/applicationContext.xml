@@ -48,14 +48,11 @@
 
 	<!-- HIBERNATE -->
 
-	<bean id="configuration" class="org.hibernate.cfg.Configuration" />
-	
-	<bean id="hibernateConfiguration" factory-bean="configuration"
-		 factory-method="configure" />
+	<bean id="configuration" class="org.hibernate.cfg.Configuration" init-method="configure"/>
 		
 	<bean id="newsDao" class="com.epam.testapp.database.impl.HibernateNewsDao">
 		<property name="sessionFactory">
-			<bean factory-bean="hibernateConfiguration" factory-method="buildSessionFactory" />
+			<bean factory-bean="configuration" factory-method="buildSessionFactory" />
 		</property>
 	</bean>
 
