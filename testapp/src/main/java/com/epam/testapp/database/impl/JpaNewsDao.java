@@ -14,6 +14,8 @@ import com.epam.testapp.entity.News;
 public class JpaNewsDao implements INewsDao {
 
 	private EntityManagerFactory entityManagerFactory;
+	private final String Q_GET_NEWS_LIST = "News.getNewsList";
+	private final String Q_DELETE_NEWS = "News.deleteNews";
 
 	@SuppressWarnings( "unchecked" )
 	@Override
@@ -23,7 +25,7 @@ public class JpaNewsDao implements INewsDao {
 		List<News> newsList = null;
 		try {
 			em = entityManagerFactory.createEntityManager();
-			Query q = em.createNamedQuery( "News.getNewsList" );
+			Query q = em.createNamedQuery( Q_GET_NEWS_LIST );
 			newsList = q.getResultList();
 		} catch ( Exception e ) {
 			throw new DaoTestappException(
@@ -71,7 +73,7 @@ public class JpaNewsDao implements INewsDao {
 			em = entityManagerFactory.createEntityManager();
 			transaction = em.getTransaction();
 			transaction.begin();
-			Query query = em.createNamedQuery( "News.deleteNews" );
+			Query query = em.createNamedQuery( Q_DELETE_NEWS );
 			query.setParameter( "id", newsId );
 			query.executeUpdate();
 			transaction.commit();

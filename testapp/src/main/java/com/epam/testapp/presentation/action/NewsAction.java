@@ -122,7 +122,7 @@ public class NewsAction extends MappingDispatchAction {
 		String pageName = ProjectPages.ADD_NEWS_PAGE;
 		
 		newsService.setCurrentPage( request, pageName );
-		newsService.setPreviousPage( request, pageName );
+		//newsService.setPreviousPage( request, pageName );
 		newsService.setPreviousNewsId( request, news.getId() );
 		return mapping.findForward( pageName );
 	}
