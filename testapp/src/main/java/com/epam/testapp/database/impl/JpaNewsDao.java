@@ -11,7 +11,7 @@ import com.epam.testapp.database.DaoTestappException;
 import com.epam.testapp.database.INewsDao;
 import com.epam.testapp.entity.News;
 
-public class JpaNewsDao implements INewsDao {
+public final class JpaNewsDao implements INewsDao {
 
 	private EntityManagerFactory entityManagerFactory;
 	private final String Q_GET_NEWS_LIST = "News.getNewsList";

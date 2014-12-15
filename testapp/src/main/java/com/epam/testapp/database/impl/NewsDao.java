@@ -15,7 +15,7 @@ import com.epam.testapp.database.connection.ConnectionPool;
 import com.epam.testapp.database.connection.ConnectionPoolTestappException;
 import com.epam.testapp.entity.News;
 
-public class NewsDao implements INewsDao {
+public final class NewsDao implements INewsDao {
 
 	private ConnectionPool connectionPool;
 

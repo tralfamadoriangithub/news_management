@@ -25,18 +25,19 @@
 
 	<!-- JPA -->
 
-	<!-- <bean id="newsDao" class="com.epam.testapp.database.impl.JpaNewsDao"> 
-		<property name="entityManagerFactory"> <value>#{T(javax.persistence.Persistence) 
-		.createEntityManagerFactory("NEWS_PERSISTENCE")}</value> </property> </bean> -->
+	<bean id="newsDao" class="com.epam.testapp.database.impl.JpaNewsDao">
+		<property name="entityManagerFactory">
+			<value>#{T(javax.persistence.Persistence)
+				.createEntityManagerFactory("NEWS_PERSISTENCE")}</value>
+		</property>
+	</bean>
 
 	<!-- HIBERNATE -->
 
-	<bean id="configuration" class="org.hibernate.cfg.Configuration" />
-	<bean id="newsDao" class="com.epam.testapp.database.impl.HibernateNewsDao">
-		<property name="sessionFactory">
-			<value>#{configuration.configure().buildSessionFactory()}</value>
-		</property>
-	</bean>
+	<!-- <bean id="configuration" class="org.hibernate.cfg.Configuration" /> 
+		<bean id="newsDao" class="com.epam.testapp.database.impl.HibernateNewsDao"> 
+		<property name="sessionFactory"> <value>#{configuration.configure().buildSessionFactory()}</value> 
+		</property> </bean> -->
 
 	<!-- News Service -->
 

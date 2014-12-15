@@ -12,7 +12,7 @@ import com.epam.testapp.database.DaoTestappException;
 import com.epam.testapp.database.INewsDao;
 import com.epam.testapp.entity.News;
 
-public class HibernateNewsDao implements INewsDao {
+public final class HibernateNewsDao implements INewsDao {
 
 	private SessionFactory sessionFactory;
 	private final String Q_GET_NEWS_LIST = "getNewsList";
@@ -43,10 +43,11 @@ public class HibernateNewsDao implements INewsDao {
 
 		Session session = null;
 		Transaction transaction = null;
+		News addedNews = null;
 		try {
 			session = sessionFactory.getCurrentSession();
 			transaction = session.beginTransaction();
-			session.merge( news );
+			addedNews = (News) session.merge( news );
 			transaction.commit();
 		} catch ( HibernateException e ) {
 			if ( transaction != null ) {
@@ -55,7 +56,7 @@ public class HibernateNewsDao implements INewsDao {
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in save method", e );
 		} 
-		return news;
+		return addedNews;
 	}
 
 	@Override

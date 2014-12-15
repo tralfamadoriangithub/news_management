@@ -13,7 +13,6 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
 		<property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>	
 		<mapping resource="com/epam/testapp/news.hdm.xml"/>
-		<!-- <mapping class="com.epam.testapp.entity.News"/> -->
 		
 	</session-factory>
 </hibernate-configuration>

@@ -11,9 +11,6 @@ import javax.servlet.http.HttpSession;
 import com.epam.testapp.database.DaoTestappException;
 import com.epam.testapp.database.INewsDao;
 import com.epam.testapp.entity.News;
-import com.epam.testapp.service.AttributeName;
-import com.epam.testapp.service.INewsService;
-import com.epam.testapp.service.ServiceTestappException;
 import com.epam.testapp.util.DateUtil;
 
 public class NewsServiceImpl implements INewsService {

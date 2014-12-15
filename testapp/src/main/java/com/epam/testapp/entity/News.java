@@ -16,37 +16,36 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="NEWS")
-@NamedQueries({
-	@NamedQuery(name="News.getNewsList", query="SELECT n FROM News n ORDER BY n.date DESC"),
-	@NamedQuery(name="News.deleteNews", query="DELETE FROM News n WHERE n.id IN :id")
-})
-
+@Table( name = "NEWS" )
+@NamedQueries( {
+		@NamedQuery( name = "News.getNewsList", query = "SELECT n FROM News n ORDER BY n.date DESC" ),
+		@NamedQuery( name = "News.deleteNews", query = "DELETE FROM News n WHERE n.id IN :id" ) } )
 public class News implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@Column(name = "NEWS_ID")
-	@SequenceGenerator( name="id_seq", sequenceName="TEST_ID_SEQ", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="id_seq")
+	@Column( name = "NEWS_ID" )
+	@SequenceGenerator( name = "id_seq", sequenceName = "TEST_ID_SEQ", allocationSize = 1 )
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "id_seq" )
 	private int id;
-	
-	@Column(name="NEWS_TITLE")
+
+	@Column( name = "NEWS_TITLE" )
 	private String title;
-	
-	@Column(name="NEWS_DATE")
-	@Temporal(TemporalType.DATE)
+
+	@Column( name = "NEWS_DATE" )
+	@Temporal( TemporalType.DATE )
 	private Date date;
-	
-	@Column(name="NEWS_BRIEF")
+
+	@Column( name = "NEWS_BRIEF" )
 	private String brief;
-	
-	@Column(name="NEWS_CONTENT")
+
+	@Column( name = "NEWS_CONTENT" )
 	private String content;
-	
-	public News(){}
-	
+
+	public News() {
+	}
+
 	public News( int id, String title, Date date, String brief, String content ) {
 		this.id = id;
 		this.title = title;
@@ -59,7 +58,7 @@ public class News implements Serializable {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId( int id ) {
 		this.id = id;
 	}
 
@@ -67,7 +66,7 @@ public class News implements Serializable {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle( String title ) {
 		this.title = title;
 	}
 
@@ -75,7 +74,7 @@ public class News implements Serializable {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate( Date date ) {
 		this.date = date;
 	}
 
@@ -83,7 +82,7 @@ public class News implements Serializable {
 		return brief;
 	}
 
-	public void setBrief(String brief) {
+	public void setBrief( String brief ) {
 		this.brief = brief;
 	}
 
@@ -91,7 +90,7 @@ public class News implements Serializable {
 		return content;
 	}
 
-	public void setContent(String content) {
+	public void setContent( String content ) {
 		this.content = content;
 	}
 
@@ -108,35 +107,35 @@ public class News implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals( Object obj ) {
+		if ( this == obj )
 			return true;
-		if (obj == null)
+		if ( obj == null )
 			return false;
-		if (getClass() != obj.getClass())
+		if ( getClass() != obj.getClass() )
 			return false;
 		News other = (News) obj;
-		if (brief == null) {
-			if (other.brief != null)
+		if ( brief == null ) {
+			if ( other.brief != null )
 				return false;
-		} else if (!brief.equals(other.brief))
+		} else if ( !brief.equals( other.brief ) )
 			return false;
-		if (content == null) {
-			if (other.content != null)
+		if ( content == null ) {
+			if ( other.content != null )
 				return false;
-		} else if (!content.equals(other.content))
+		} else if ( !content.equals( other.content ) )
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		if ( date == null ) {
+			if ( other.date != null )
 				return false;
-		} else if (!date.equals(other.date))
+		} else if ( !date.equals( other.date ) )
 			return false;
-		if (id != other.id)
+		if ( id != other.id )
 			return false;
-		if (title == null) {
-			if (other.title != null)
+		if ( title == null ) {
+			if ( other.title != null )
 				return false;
-		} else if (!title.equals(other.title))
+		} else if ( !title.equals( other.title ) )
 			return false;
 		return true;
 	}
