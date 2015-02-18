@@ -25,6 +25,7 @@ public final class HibernateNewsDao implements INewsDao {
 		Session session = null;
 		Transaction transaction = null;
 		List<News> newsList = null;
+		System.out.println("Hib get list");
 		try {
 			session = sessionFactory.getCurrentSession();
 			transaction = session.beginTransaction();
@@ -32,6 +33,7 @@ public final class HibernateNewsDao implements INewsDao {
 			newsList = query.list();
 			transaction.commit();
 		} catch ( HibernateException e ) {
+			e.printStackTrace();
 			throw new DaoTestappException(
 					"NewsDao Hibernate exception in getList method", e );
 		} 

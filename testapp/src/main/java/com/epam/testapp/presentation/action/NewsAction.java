@@ -45,7 +45,9 @@ public class NewsAction extends MappingDispatchAction {
 
 		List<News> newsList = null;
 		try {
+			System.out.println("Get list");
 			newsList = newsService.getNewsList();
+			System.out.println("List " + newsList);
 		} catch ( ServiceTestappException e ) {
 			logger.error( e.getMessage() );
 			return mapping.findForward( ProjectPages.ERROR_PAGE );

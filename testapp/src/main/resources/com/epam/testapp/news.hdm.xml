@@ -22,8 +22,9 @@
 		<property name="content" type="string">
 			<column name="NEWS_CONTENT" length="2000" not-null="true" />
 		</property>
-	</class>
 
+	</class>
+	
 	<query name="getNewsList">
 			<![CDATA[from News n ORDER BY n.date DESC]]>
 	</query>

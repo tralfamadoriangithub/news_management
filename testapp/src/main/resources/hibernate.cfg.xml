@@ -7,7 +7,7 @@
 	
 		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
 		<property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
-		<property name="hibernate.connection.username">testapp</property>
+		<property name="hibernate.connection.username">TESTAPP</property>
 		<property name="hibernate.connection.password">oracle</property>
 		
 		<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
